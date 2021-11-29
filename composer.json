@@ -1,0 +1,16 @@
+{
+    "name": "webber12/evocms-user",
+    "description": "User Helper for evocms 3.x",
+    "autoload": {
+        "psr-4": {
+            "EvolutionCMS\\EvoUser\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EvolutionCMS\\EvoUser\\EvoUserServiceProvider"
+            ]
+        }
+    }
+}
