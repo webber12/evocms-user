@@ -5,5 +5,5 @@ namespace EvolutionCMS\EvoUser;
 
 class EvoUser
 {
-    
+
 }

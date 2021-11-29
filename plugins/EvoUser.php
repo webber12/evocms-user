@@ -1,7 +1,7 @@
 <?php
 
 Event::listen('evolution.OnWebPageInit', function($params) {
-    die('evoUser on web page init');
+    evo()->regClientScript("assets/plugins/evocms-user/script.js");
     return serialize($params);
 });
 
