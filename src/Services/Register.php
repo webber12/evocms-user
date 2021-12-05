@@ -51,9 +51,7 @@ class Register extends Service
                 $response['redirect'] = evo()->makeUrl($redirectId);
             }
         }
-        $response = $this->makeResponse($response);
-        //print_r($data);
-        return;
+        return $this->makeResponse($response);
     }
 
 

@@ -27,7 +27,7 @@ class Controller
 
     public function getConfig($reload = false)
     {
-        if (empty($this->config) || $reload == false) {
+        if (empty($this->config) || $reload == true) {
             $this->config = $this->loadConfig();
         }
         return $this->config;

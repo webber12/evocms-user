@@ -17,9 +17,7 @@ class Response
     public static function send($response = [])
     {
         if (self::isAjax()) {
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            exit();
+            return response()->json($response);
         } else {
             return $response;
         }

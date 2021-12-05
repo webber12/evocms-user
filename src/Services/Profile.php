@@ -27,9 +27,6 @@ class Profile extends Service
 
             $customErrors = $this->makeCustomValidator($data);
 
-            evo()->logEvent(1,1,json_encode($data), 'profile  data');
-            evo()->logEvent(1,1,json_encode($this->user), 'profile user');
-
             if (!empty($customErrors)) {
                 $errors['customErrors'] = $customErrors;
             } else if (empty($data['id'])) {
@@ -57,9 +54,7 @@ class Profile extends Service
                 $response['redirect'] = evo()->makeUrl($redirectId);
             }
         }
-        $response = $this->makeResponse($response);
-        //print_r($data);
-        return;
+        return $this->makeResponse($response);
     }
 
 
