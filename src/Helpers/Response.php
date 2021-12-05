@@ -16,10 +16,11 @@ class Response
 
     public static function send($response = [])
     {
-        if (self::isAjax()) {
+        return response()->json($response);
+        /*if (self::isAjax()) {
             return response()->json($response);
         } else {
             return $response;
-        }
+        }*/
     }
 }

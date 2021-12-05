@@ -19,6 +19,7 @@ class EvoUserServiceProvider extends ServiceProvider
         $this->loadPluginsFrom(__DIR__ . '/../plugins/');
 
         $this->app->alias(EvoUser::class, 'evouser');
+        app('router')->aliasMiddleware('evo-user-access', \EvolutionCMS\EvoUser\Middlewares\EvoUserAccess::class);
     }
 
     /**

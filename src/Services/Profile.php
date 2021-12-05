@@ -12,26 +12,23 @@ use Illuminate\Support\Facades\Validator;
 
 class Profile extends Service
 {
-
-    public function process()
+    public function process($uid = 0)
     {
-        if($this->checkErrors()) {
-            return $this->makeResponse($this->errors);
-            die();
-        }
         $errors = [];
 
         if (request()->has(['fullname'])) {
 
             $data = $this->makeData();
 
+            $data['id'] = $uid;
+
             $customErrors = $this->makeCustomValidator($data);
 
             if (!empty($customErrors)) {
                 $errors['customErrors'] = $customErrors;
-            } else if (empty($data['id'])) {
+            }/* else if (empty($data['id'])) {
                 $errors['accessError'] = 'access denied';
-            } else {
+            } */else {
                 $data = $this->callPrepare($data);
                 try {
                     $user = (new UserManager())->edit($data, true, false);
@@ -63,7 +60,6 @@ class Profile extends Service
         $fullname = $this->clean(request()->input("fullname"));
         $data = ['fullname' => $fullname];
         $data = $this->injectAddFields($data);
-        $data['id'] = $this->user['id'] ?? 0;
         return $data;
     }
 

@@ -5,7 +5,7 @@ return [
     //"AuthRedirectId" => 1,
     "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Auth",
     "AuthCustomRules" => [
-        'username' => 'required|min:6',
+        'username' => 'required|min:5',
     ],
     "AuthCustomMessages" => [
         'username.required' =>  trans('evousercore::messages.fieldrequired', [ 'field' => 'Username' ]),
@@ -37,5 +37,14 @@ return [
         'first_name.min' => 'имя не короче 6 знаков',
     ],
     "ProfilePrepare" => "classname::methodname",
+    "CommonAccessRules" => [
+        'context' => 'web',
+        'current' => true,
+        'roles' => [ 2 ],
+        'custom' => "classname::methodname",
+    ],
+    "ProfileInfoAccessRules" => [
+
+    ],
 
 ];

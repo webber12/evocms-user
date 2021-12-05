@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Validator;
 class Register extends Service
 {
 
-    public function process()
+    public function process($uid = 0)
     {
-        if($this->checkErrors()) {
-            return $this->makeResponse($this->errors);
-            die();
-        }
         $errors = [];
         if (request()->has(['email', 'password'])) {
 
@@ -54,11 +50,6 @@ class Register extends Service
         return $this->makeResponse($response);
     }
 
-
-    protected function checkAccess()
-    {
-        return true;
-    }
 
     protected function makeData()
     {

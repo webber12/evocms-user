@@ -2,20 +2,14 @@
 namespace EvolutionCMS\EvoUser\Services;
 
 use EvolutionCMS\EvoUser\Services\Service;
-use Illuminate\Http\Request;
-use EvolutionCMS\EvoUser\Helpers\Response;
 use \EvolutionCMS\UserManager\Services\UserManager;
 
 
 class Auth extends Service
 {
 
-    public function process()
+    public function process($uid = 0)
     {
-        if($this->checkErrors()) {
-            return $this->makeResponse($this->errors);
-            die();
-        }
         $errors = [];
 
         if (request()->has(['username', 'password'])) {
@@ -52,11 +46,6 @@ class Auth extends Service
         return $this->makeResponse($response);
     }
 
-
-    protected function checkAccess()
-    {
-        return true;
-    }
 
     protected function makeData()
     {

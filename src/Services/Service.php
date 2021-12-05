@@ -26,13 +26,10 @@ class Service
                 evo()->sendRedirect(evo()->makeUrl($logoutId));
             }
         }
-        $this->loadUser();
-        if(!$this->checkAccess()) {
-            $this->errors[] = 'access denied';
-        }
+        $this->loadCurrentUser();
     }
 
-    public function process()
+    public function process($uid = 0)
     {
 
     }
@@ -43,50 +40,17 @@ class Service
         return $response;
     }
 
-    protected function checkAccess()
+    protected function loadCurrentUser()
     {
-        $flag = false;
-        if(!empty($this->user) && $this->checkAccessRules()) {
-            $flag = true;
-        }
-        return $flag;
-    }
-
-    protected function loadUser()
-    {
-        $userId = $this->isLogged();
-        //echo $userId;
-        if(!empty($userId)) {
-            $flag = true;
-            $service = new UserManager();
-            $user = $service->get($userId);
-            $tvs = $service->getValues(['id' => $userId], false, false);
-            $attributes = $user->attributes->toArray();
-            $this->user = $attributes;
-            $this->user['username'] = $user->username;
-            $this->user['role'] = evo()->db->getValue("SELECT role FROM " . evo()->getFullTablename("user_attributes") . " where internalKey=" . $attributes['internalKey']);
-            $this->user['tvs'] = $tvs;
-        }
+        //плейсхолдер ставится в момент проверки доступа в middleware EvoUserAccess
+        $user = evo()->getPlaceholder('evocms-user');
+        $this->user = !empty($user) ? $user : [];
         return true;
-    }
-
-    protected function checkAccessRules()
-    {
-        return true;
-    }
-
-    protected function isLogged()
-    {
-        return evo()->getLoginUserId('web');
-    }
-
-    protected function checkErrors()
-    {
-        return !empty($this->errors);
     }
 
     public function getUser()
     {
+        print_r($this->user);
         return $this->user;
     }
 
@@ -141,4 +105,17 @@ class Service
     {
         return substr(strrchr(get_called_class(), "\\"), 1);
     }
+
+    protected function reloadUser($uid)
+    {
+        $service = new UserManager();
+        $user = $service->get($uid);
+        $tvs = $service->getValues(['id' => $uid], false, false);
+        $arr = $user->attributes->toArray();
+        $arr['username'] = $user->username;
+        $arr['role'] = evo()->db->getValue("SELECT role FROM " . evo()->getFullTablename("user_attributes") . " where internalKey=" . $arr['internalKey']);
+        $arr['tvs'] = $tvs;
+        return $arr;
+    }
+
 }
