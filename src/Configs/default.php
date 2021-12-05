@@ -1,17 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Lang;
-
 return [
     //"LogoutRedirectId" => 1,
     //"AuthRedirectId" => 1,
     "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Auth",
     "AuthCustomRules" => [
-        'username' => 'required|min:5',
+        'username' => 'required|min:6',
     ],
     "AuthCustomMessages" => [
-        'username.required' => Lang::get("global.required_field", ['field' => 'username']),
-        'username.min' => 'username не короче 5 знаков',
+        'username.required' =>  trans('evousercore::messages.fieldrequired', [ 'field' => 'Username' ]),
+        'username.min' =>  trans('evousercore::messages.minlength', [ 'field' => 'Username', 'num' => 5 ]),
     ],
     "AuthPrepare" => "classname::methodname",
 
@@ -23,9 +21,7 @@ return [
         'first_name' => 'required|min:6'
     ],
     "RegisterCustomMessages" => [
-        'fullname.required' => Lang::get("global.required_field", ['field' => 'fullname']),
-        'first_name.required' => Lang::get("global.required_field", ['field' => 'first_name']),
-        'fullname.min' => 'полное имя не короче 6 знаков',
+        'fullname.min' => trans('evouser:messages.test'),
         'first_name.min' => 'имя не короче 6 знаков',
     ],
     "RegisterPrepare" => "classname::methodname",
@@ -37,13 +33,9 @@ return [
         'first_name' => 'required|min:6'
     ],
     "ProfileCustomMessages" => [
-        'fullname.required' => Lang::get("global.required_field", ['field' => 'fullname']),
-        'first_name.required' => Lang::get("global.required_field", ['field' => 'first_name']),
         'fullname.min' => 'полное имя не короче 6 знаков',
         'first_name.min' => 'имя не короче 6 знаков',
     ],
     "ProfilePrepare" => "classname::methodname",
-
-
 
 ];

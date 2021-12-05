@@ -28,9 +28,25 @@ class EvoUserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        //usage trans('evousercore::messages.line', [ 'field' => 'Username' ])
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'evousercore');
+
         $this->publishes([
             __DIR__ . '/../publishable/assets'  => MODX_BASE_PATH . 'assets',
             __DIR__ . '/../publishable/configs' => EVO_CORE_PATH . 'custom/evocms-user/configs',
+            __DIR__ . '/../publishable/lang' => EVO_CORE_PATH . 'custom/evocms-user/lang',
         ]);
+
+        //usage trans('evousercustom::messages.line', [ 'field' => 'Username' ])
+        $this->loadTranslationsFrom(EVO_CORE_PATH . 'custom/evocms-user/lang', 'evousercustom');
+
+        $this->mergeConfigFrom(
+            EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evouser'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/Configs/default.php', 'evouser'
+        );
+
     }
 }

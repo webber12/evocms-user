@@ -35,20 +35,13 @@ class Controller
 
     public function loadConfig()
     {
-        $config = [];
-        if (file_exists(__DIR__ . '/Configs/default.php')) {
-            $config = include_once(__DIR__ . '/Configs/default.php');
-        }
-        if (file_exists(MODX_BASE_PATH . 'core/custom/evocms-user/configs/config.php')) {
-            $custom = include_once(MODX_BASE_PATH . 'core/custom/evocms-user/configs/config.php');
-            $config = array_merge($config, $custom);
-        }
-        return $config;
+        return [];
     }
 
     protected function loadService($name)
     {
-        $service = !empty($this->config[$name . 'Service']) ? $this->config[$name . 'Service'] : "\\EvolutionCMS\\EvoUser\\Services\\" . $name;
+        $serviceName = config('evouser.' . $name . 'Service');
+        $service = !empty($serviceName) ? $serviceName : "\\EvolutionCMS\\EvoUser\\Services\\" . $name;
         return new $service($this->config);
     }
 }

@@ -4,12 +4,12 @@
 
 return [
 
-    /*"AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\AuthCustom",
+    "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\AuthCustom",
 
     "ProfileCustomMessages" => [
         'fullname.required' => Lang::get("global.required_field", ['field' => 'fullname']),
         'first_name.required' => Lang::get("global.required_field", ['field' => 'first_name']),
         'fullname.min' => 'полное имя не короче 5 знаков',
         'first_name.min' => 'имя не короче 5 знаков',
-    ],*/
+    ],
 ];

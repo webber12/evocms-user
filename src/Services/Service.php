@@ -92,7 +92,7 @@ class Service
 
     protected function getCfg($key, $default = false)
     {
-        return isset($this->config[$key]) ? $this->config[$key] : $default;
+        return config( "evouser." . $key, $default);
     }
 
     protected function clean($str)
