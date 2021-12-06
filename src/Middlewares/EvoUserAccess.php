@@ -48,7 +48,7 @@ class EvoUserAccess
         $user = [];
         $context = !empty($rules['context']) ? $rules['context'] : 'web';
         if($context == 'all') {
-            $uid = evo()->getLoginUserID($web) ?: evo()->getLoginUserID($mgr);
+            $uid = evo()->getLoginUserID('web') ?: evo()->getLoginUserID('mgr');
         } else {
             $uid = evo()->getLoginUserID($context);
         }
