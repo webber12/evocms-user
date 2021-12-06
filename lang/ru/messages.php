@@ -1,6 +1,6 @@
 <?php
 return [
-    'fieldrequired' => ':field необходимо заполнить',
+    'required_field' => ':field необходимо заполнить',
     'minlength' => 'минимальная длина поля :field :num знаков',
 ];
 

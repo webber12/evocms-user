@@ -22,7 +22,7 @@ class Controller
         return $this->loadService(__FUNCTION__)->process();
     }
 
-    public function Profile($user)
+    public function ProfileEdit($user)
     {
         return $this->loadService(__FUNCTION__)->process($user);
     }

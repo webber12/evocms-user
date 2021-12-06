@@ -8,8 +8,8 @@ return [
         'username' => 'required|min:5',
     ],
     "AuthCustomMessages" => [
-        'username.required' =>  trans('evousercore::messages.fieldrequired', [ 'field' => 'Username' ]),
-        'username.min' =>  trans('evousercore::messages.minlength', [ 'field' => 'Username', 'num' => 5 ]),
+        'username.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Username' ]),
+        'username.min' =>  trans('evocms-user-core::messages.minlength', [ 'field' => 'Username', 'num' => 5 ]),
     ],
     "AuthPrepare" => "classname::methodname",
 
@@ -21,7 +21,7 @@ return [
         'first_name' => 'required|min:6'
     ],
     "RegisterCustomMessages" => [
-        'fullname.min' => trans('evouser:messages.test'),
+        'fullname.min' => trans('evocms-user-core:messages.test'),
         'first_name.min' => 'имя не короче 6 знаков',
     ],
     "RegisterPrepare" => "classname::methodname",
@@ -40,7 +40,7 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 2 ],
+        'roles' => [ 1 ],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [

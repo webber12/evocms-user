@@ -19,7 +19,7 @@ class EvoUserServiceProvider extends ServiceProvider
         $this->loadPluginsFrom(__DIR__ . '/../plugins/');
 
         $this->app->alias(EvoUser::class, 'evouser');
-        app('router')->aliasMiddleware('evo-user-access', \EvolutionCMS\EvoUser\Middlewares\EvoUserAccess::class);
+        app('router')->aliasMiddleware('evocms-user-access', \EvolutionCMS\EvoUser\Middlewares\EvoUserAccess::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class EvoUserServiceProvider extends ServiceProvider
     {
 
         //usage trans('evousercore::messages.line', [ 'field' => 'Username' ])
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'evousercore');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'evocms-user-core');
 
         $this->publishes([
             __DIR__ . '/../publishable/assets'  => MODX_BASE_PATH . 'assets',
@@ -40,7 +40,7 @@ class EvoUserServiceProvider extends ServiceProvider
         ]);
 
         //usage trans('evousercustom::messages.line', [ 'field' => 'Username' ])
-        $this->loadTranslationsFrom(EVO_CORE_PATH . 'custom/evocms-user/lang', 'evousercustom');
+        $this->loadTranslationsFrom(EVO_CORE_PATH . 'custom/evocms-user/lang', 'evocms-user-custom');
 
         $this->mergeConfigFrom(
             EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evouser'
