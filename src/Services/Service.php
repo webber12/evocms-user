@@ -50,7 +50,7 @@ class Service
 
     public function getUser()
     {
-        print_r($this->user);
+        //print_r($this->user);
         return $this->user;
     }
 

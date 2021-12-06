@@ -26,6 +26,7 @@ Route::get('/evocms-user/documents/{user}', [Controller::class, 'DocumentList'])
 
 Route::get('/evocms-user/documents/{user}/{id}', [Controller::class, 'DocumentInfo'])
     ->where('user', '[0-9]+')
+    ->where('id', '[0-9]+')
     ->middleware('evocms-user-access:DocumentInfo')
     ->name('evocms-user-documents-info');
 
@@ -33,4 +34,8 @@ Route::get('/evocms-user/document/{id}', [Controller::class, 'DocumentObject'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-access:DocumentObject')
     ->name('evocms-user-document-object');
+
+Route::post('/evocms-user/document', [Controller::class, 'DocumentCreate'])
+    ->middleware('evocms-user-access:DocumentCreate')
+    ->name('evocms-user-document-create');
 

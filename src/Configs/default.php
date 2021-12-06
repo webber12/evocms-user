@@ -21,7 +21,7 @@ return [
         'first_name' => 'required|min:6'
     ],
     "RegisterCustomMessages" => [
-        'fullname.min' => trans('evocms-user-core:messages.test'),
+        'fullname.min' => trans('evocms-user-core::messages.test'),
         'first_name.min' => 'имя не короче 6 знаков',
     ],
     "RegisterPrepare" => "classname::methodname",
@@ -40,7 +40,7 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 2 ],
+        'roles' => [ 1 ],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [
@@ -51,7 +51,7 @@ return [
     "DocumentListDisplay" => 15,
     "DocumentListSortBy" => "id",
     "DocumentListSortDir" => "DESC",
-    "DocumentListFields" => "id,pagetitle,longtitle,alias",
+    "DocumentListFields" => "id,pagetitle,longtitle,alias,createdby",
     "DocumentListTVs" => "image,tv2",
     "DocumentListOnlyActive" => false,
     "DocumentListShowUndeleted" => true,
@@ -61,5 +61,21 @@ return [
     "DocumentObjectService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentObject",
     "DocumentObjectOnlyActive" => false,
     "DocumentObjectShowUndeleted" => true,
+
+    "DocumentCreateService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentCreate",
+    "DocumentCreateDefaults" => [
+        'pagetitle' => trans('evocms-user-core::messages.new_document'),
+        'template' => 0,
+        'parent' => 0,
+        'published' => 0,
+
+    ],
+    "DocumentCreateCustomRules" => [
+        'pagetitle' => 'required|min:6',
+    ],
+    "DocumentCreateCustomMessages" => [
+        'pagetitle.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Pagetitle' ]),
+        'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
+    ],
 
 ];

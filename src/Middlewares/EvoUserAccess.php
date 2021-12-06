@@ -121,6 +121,10 @@ class EvoUserAccess
         $q = trim(request()->input('q'), '/');
         $q = explode('/', $q);
         switch ($action) {
+            case 'DocumentCreate':
+                //документы могут создавать только по роли
+                $arr['user'] = -1;
+                break;
             case 'DocumentObject':
                 $arr['id'] = array_pop($q);
                 $res = SiteContent::select(['createdby'])
