@@ -24,12 +24,27 @@ class Controller
 
     public function ProfileEdit($user)
     {
-        return $this->loadService(__FUNCTION__)->process($user);
+        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
     }
 
     public function ProfileInfo($user)
     {
-        return $this->loadService(__FUNCTION__)->process($user);
+        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+    }
+
+    public function DocumentList($user)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+    }
+
+    public function DocumentInfo($user, $id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'user' => $user, 'id' => $id ]);
+    }
+
+    public function DocumentObject($id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
     }
 
     public function getConfig($reload = false)

@@ -43,10 +43,10 @@ class EvoUserServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(EVO_CORE_PATH . 'custom/evocms-user/lang', 'evocms-user-custom');
 
         $this->mergeConfigFrom(
-            EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evouser'
+            EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evocms-user'
         );
         $this->mergeConfigFrom(
-            __DIR__ . '/Configs/default.php', 'evouser'
+            __DIR__ . '/Configs/default.php', 'evocms-user'
         );
 
     }

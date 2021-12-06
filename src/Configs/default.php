@@ -40,11 +40,26 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 1 ],
+        'roles' => [ 2 ],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [
 
     ],
+
+    "DocumentListService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentList",
+    "DocumentListDisplay" => 15,
+    "DocumentListSortBy" => "id",
+    "DocumentListSortDir" => "DESC",
+    "DocumentListFields" => "id,pagetitle,longtitle,alias",
+    "DocumentListTVs" => "image,tv2",
+    "DocumentListOnlyActive" => false,
+    "DocumentListShowUndeleted" => true,
+
+    "DocumentInfoService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentInfo",
+
+    "DocumentObjectService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentObject",
+    "DocumentObjectOnlyActive" => false,
+    "DocumentObjectShowUndeleted" => true,
 
 ];

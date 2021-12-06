@@ -9,8 +9,9 @@ use \EvolutionCMS\UserManager\Services\UserManager;
 class ProfileInfo extends Service
 {
 
-    public function process($uid = 0)
+    public function process($params = [])
     {
+        $uid = $params['user'] ?? 0;
         $user = $this->reloadUser($uid);
         return $this->makeResponse($user);
     }

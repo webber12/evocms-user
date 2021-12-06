@@ -8,7 +8,7 @@ use \EvolutionCMS\UserManager\Services\UserManager;
 class Register extends Service
 {
 
-    public function process($uid = 0)
+    public function process($params = [])
     {
         $errors = [];
         if (request()->has(['email', 'password'])) {

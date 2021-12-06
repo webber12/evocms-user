@@ -29,7 +29,7 @@ class Service
         $this->loadCurrentUser();
     }
 
-    public function process($uid = 0)
+    public function process($params = [])
     {
 
     }
@@ -56,7 +56,7 @@ class Service
 
     protected function getCfg($key, $default = false)
     {
-        return config( "evouser." . $key, $default);
+        return config( "evocms-user." . $key, $default);
     }
 
     protected function clean($str)

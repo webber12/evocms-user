@@ -8,7 +8,7 @@ use \EvolutionCMS\UserManager\Services\UserManager;
 class Auth extends Service
 {
 
-    public function process($uid = 0)
+    public function process($params = [])
     {
         $errors = [];
 

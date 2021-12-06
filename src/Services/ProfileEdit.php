@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileEdit extends Service
 {
-    public function process($uid = 0)
+    public function process($params = [])
     {
         $errors = [];
+
+        $uid = $params['user'] ?? 0;
 
         if (request()->has(['fullname'])) {
 

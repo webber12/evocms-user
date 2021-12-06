@@ -2,6 +2,7 @@
 namespace EvolutionCMS\EvoUser\Middlewares;
 
 use Closure;
+use EvolutionCMS\Models\SiteContent;
 use EvolutionCMS\Models\UserAttribute;
 use EvolutionCMS\UserManager\Services\UserManager;
 
@@ -21,13 +22,13 @@ class EvoUserAccess
     {
         $flag = false;
         $rules = $this->getRules($action);
-        $query_uid = $this->getUidInQuery($action);
+        $qParams = $this->getParamsFromQuery($action);
         if(!empty($rules)) {
             $user = $this->isLogged($rules);
             if(!empty($user)) {
                 $role = $user['role'];
                 $roles = $rules['roles'] ?? [];
-                $flag = $this->checkCurrent($user['id'], $query_uid, $rules) || $this->checkRoles($role, $roles);
+                $flag = $this->checkCurrent($user['id'], $qParams['user'], $rules) || $this->checkRoles($role, $roles);
                 if(!$flag && !empty($rules['custom']) && is_callable($rules['custom'])) {
                     $flag = call_user_func($rules['custom'], [ 'user' => $user, 'rules' => $rules ]);
                 }
@@ -38,8 +39,8 @@ class EvoUserAccess
 
     protected function getRules($action)
     {
-        $default = config('evouser.CommonAccessRules', []);
-        $custom = config('evouser.' . $action . 'AccessRules', []);
+        $default = config('evocms-user.CommonAccessRules', []);
+        $custom = config('evocms-user.' . $action . 'AccessRules', []);
         return array_merge($default, $custom);
     }
 
@@ -90,11 +91,11 @@ class EvoUserAccess
         return $arr;
     }
 
-    protected function checkCurrent($uid, $query_uid, $rules)
+    protected function checkCurrent($uid, $query_user, $rules)
     {
         $flag = true;
         if(!empty($rules['current'])) {
-            if ($query_uid != $uid) {
+            if ($query_user != $uid) {
                 $flag = false;
             }
         }
@@ -114,17 +115,38 @@ class EvoUserAccess
         return $flag;
     }
 
-    protected function getUidInQuery($action = '')
+    protected function getParamsFromQuery($action = '')
     {
-        $uid = 0;
+        $arr = [];
+        $q = trim(request()->input('q'), '/');
+        $q = explode('/', $q);
         switch ($action) {
-            case '':
+            case 'DocumentObject':
+                $arr['id'] = array_pop($q);
+                $res = SiteContent::select(['createdby'])
+                    ->where('id', $arr['id']);
+                if(config( "evocms-user.DocumentObjectOnlyActive", false)) {
+                    $res = $res->active();
+                }
+                if(config( "evocms-user.DocumentObjectShowUndeleted", true)) {
+                    $res = $res->where('deleted', 0);
+                }
+                $res = $res->limit(1)->get()->toArray();
+                $uid = -1;
+                if(count($res) == 1) {
+                    $uid = $res[0]['createdby'];
+                }
+                $arr['user'] = $uid;
+                break;
+            case 'DocumentInfo':
+                $arr['id'] = array_pop($q);
+                $arr['user'] = array_pop($q);
+                break;
             default:
-                $q = trim(request()->input('q'), '/');
-                $q = explode('/', $q);
-                $uid = end($q);
+                $arr['user'] = array_pop($q);
+                break;
         }
-        return $uid;
+        return $arr;
     }
 }
 
