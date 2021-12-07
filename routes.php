@@ -19,10 +19,14 @@ Route::get('/evocms-user/profile/{user}', [Controller::class, 'ProfileInfo'])
     ->middleware('evocms-user-access:ProfileInfo')
     ->name('evocms-user-profile-info');
 
-Route::get('/evocms-user/documents/{user}', [Controller::class, 'DocumentList'])
-    ->where('user', '[0-9]+')
+Route::get('/evocms-user/documents', [Controller::class, 'DocumentList'])
     ->middleware('evocms-user-access:DocumentList')
     ->name('evocms-user-documents-list');
+
+Route::get('/evocms-user/documents/{user}', [Controller::class, 'DocumentListUser'])
+    ->where('user', '[0-9]+')
+    ->middleware('evocms-user-access:DocumentListUser')
+    ->name('evocms-user-documents-list-user');
 
 Route::get('/evocms-user/documents/{user}/{id}', [Controller::class, 'DocumentInfo'])
     ->where('user', '[0-9]+')
@@ -30,10 +34,18 @@ Route::get('/evocms-user/documents/{user}/{id}', [Controller::class, 'DocumentIn
     ->middleware('evocms-user-access:DocumentInfo')
     ->name('evocms-user-documents-info');
 
+
 Route::get('/evocms-user/document/{id}', [Controller::class, 'DocumentObject'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-access:DocumentObject')
     ->name('evocms-user-document-object');
+
+
+Route::post('/evocms-user/document/{id}', [Controller::class, 'DocumentEdit'])
+    ->where('user', '[0-9]+')
+    ->middleware('evocms-user-access:DocumentEdit')
+    ->name('evocms-user-document-edit');
+
 
 Route::post('/evocms-user/document', [Controller::class, 'DocumentCreate'])
     ->middleware('evocms-user-access:DocumentCreate')

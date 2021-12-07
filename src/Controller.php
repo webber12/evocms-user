@@ -32,7 +32,12 @@ class Controller
         return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
     }
 
-    public function DocumentList($user)
+    public function DocumentList()
+    {
+        return $this->loadService(__FUNCTION__)->process();
+    }
+
+    public function DocumentListUser($user)
     {
         return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
     }
@@ -50,6 +55,11 @@ class Controller
     public function DocumentCreate()
     {
         return $this->loadService(__FUNCTION__)->process();
+    }
+
+    public function DocumentEdit($id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
     }
 
     public function getConfig($reload = false)

@@ -48,13 +48,22 @@ return [
     ],
 
     "DocumentListService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentList",
-    "DocumentListDisplay" => 15,
+    "DocumentListDisplay" => 10,
     "DocumentListSortBy" => "id",
     "DocumentListSortDir" => "DESC",
     "DocumentListFields" => "id,pagetitle,longtitle,alias,createdby",
-    "DocumentListTVs" => "image,tv2",
+    "DocumentListTVs" => "image",
     "DocumentListOnlyActive" => false,
     "DocumentListShowUndeleted" => true,
+
+    "DocumentListUserService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
+    "DocumentListUserDisplay" => 15,
+    "DocumentListUserSortBy" => "id",
+    "DocumentListUserSortDir" => "DESC",
+    "DocumentListUserFields" => "id,pagetitle,longtitle,alias,createdby",
+    "DocumentListUserTVs" => "image",
+    "DocumentListUserOnlyActive" => false,
+    "DocumentListUserShowUndeleted" => true,
 
     "DocumentInfoService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentInfo",
 
@@ -74,6 +83,14 @@ return [
         'pagetitle' => 'required|min:6',
     ],
     "DocumentCreateCustomMessages" => [
+        'pagetitle.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Pagetitle' ]),
+        'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
+    ],
+
+    "DocumentEditCustomRules" => [
+        'pagetitle' => 'required|min:6',
+    ],
+    "DocumentEditCustomMessages" => [
         'pagetitle.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Pagetitle' ]),
         'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
     ],

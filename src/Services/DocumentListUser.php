@@ -6,31 +6,32 @@ use EvolutionCMS\EvoUser\Services\Service;
 use EvolutionCMS\Models\SiteContent;
 
 
-class DocumentList extends Service
+class DocumentListUser extends Service
 {
 
     public function process($params = [])
     {
-        $documents = $this->getDocuments();
+        $uid = $params['user'] ?? 0;
+        $documents = $this->getUserDocuments($uid);
         return $this->makeResponse($documents);
     }
 
-    protected function getDocuments()
+    protected function getUserDocuments($user)
     {
-        $display = $this->getCfg("DocumentListDisplay", 15);
-        $sortBy = $this->getCfg("DocumentListSortBy", 'menuindex');
-        $sortDir = $this->getCfg("DocumentListSortDir", 'DESC');
-        $onlyActive = $this->getCfg("DocumentListOnlyActive", false);
-        $showUndeleted = $this->getCfg("DocumentListShowUndeleted", true);
-        $fields = $this->getCfg("DocumentListFields", 'id,pagetitle');
+        $display = $this->getCfg("DocumentListUserDisplay", 15);
+        $sortBy = $this->getCfg("DocumentListUserSortBy", 'menuindex');
+        $sortDir = $this->getCfg("DocumentListUserSortDir", 'DESC');
+        $onlyActive = $this->getCfg("DocumentListUserOnlyActive", false);
+        $showUndeleted = $this->getCfg("DocumentListUserShowUndeleted", true);
+        $fields = $this->getCfg("DocumentListUserFields", 'id,pagetitle');
         $columns = array_map('trim', explode(',', $fields));
-        $tvs = $this->getCfg("DocumentListTVs", '');
+        $tvs = $this->getCfg("DocumentListUserTVs", '');
 
         if(!empty($tvs)) {
             $tvs = array_map('trim', explode(',', $tvs));
             $columns = array_merge($columns, $tvs);
         }
-        $res = SiteContent::query()
+        $res = SiteContent::where('createdby', $user)
             ->orderBy($sortBy, $sortDir);
         if(!empty($onlyActive)) {
             $res = $res->active();
@@ -59,4 +60,3 @@ class DocumentList extends Service
         return $res;
     }
 }
-

@@ -121,6 +121,25 @@ class EvoUserAccess
         $q = trim(request()->input('q'), '/');
         $q = explode('/', $q);
         switch ($action) {
+            case 'DocumentEdit':
+                $arr['id'] = array_pop($q);
+                $res = SiteContent::select(['createdby'])
+                    ->where('id', $arr['id']);
+                if(config( "evocms-user.DocumentEditOnlyActive", false)) {
+                    $res = $res->active();
+                }
+                if(config( "evocms-user.DocumentEditShowUndeleted", true)) {
+                    $res = $res->where('deleted', 0);
+                }
+                $res = $res->limit(1)->get()->toArray();
+                $uid = -1;
+                if(count($res) == 1) {
+                    $uid = $res[0]['createdby'];
+                }
+                $arr['user'] = $uid;
+                break;
+            case 'DocumentList':
+                //просматривают все документы только роли
             case 'DocumentCreate':
                 //документы могут создавать только по роли
                 $arr['user'] = -1;
