@@ -26,7 +26,7 @@ class OrderList extends Service
             'paginate'        => 'pages',
         ];
 
-        /*$DLParams['prepare'][] = function($data, $modx, $DL, $eDL) use ($fields, &$index) {
+        $DLParams['prepare'][] = function($data, $modx, $DL, $eDL) use ($fields, &$index) {
             $data['fields']    = json_decode($data['fields'], true);
             $data['index']     = $index;
             $data['iteration'] = ++$index;
@@ -36,7 +36,7 @@ class OrderList extends Service
         $customPrepare = $this->getCfg("OrderListPrepare", false);
         if(!empty($customPrepare)) {
             $DLParams['prepare'][] = $customPrepare;
-        }*/
+        }
 
         if(!empty($params['user'])) {
             $addWhereList[] = ' customer_id=' . $params['user'] . ' ';
