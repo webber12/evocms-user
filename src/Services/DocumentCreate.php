@@ -54,6 +54,7 @@ class DocumentCreate extends Service
 
     protected function makeData()
     {
+        $data = [];
         foreach($_POST as $k => $v) {
             $k = e($k);
             $v = is_string($v) ? $this->clean($v) : $this->clean(implode('||', $v));

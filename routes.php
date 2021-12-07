@@ -34,20 +34,26 @@ Route::get('/evocms-user/documents/{user}/{id}', [Controller::class, 'DocumentIn
     ->middleware('evocms-user-access:DocumentInfo')
     ->name('evocms-user-documents-info');
 
-
 Route::get('/evocms-user/document/{id}', [Controller::class, 'DocumentObject'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-access:DocumentObject')
     ->name('evocms-user-document-object');
-
 
 Route::post('/evocms-user/document/{id}', [Controller::class, 'DocumentEdit'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-access:DocumentEdit')
     ->name('evocms-user-document-edit');
 
-
 Route::post('/evocms-user/document', [Controller::class, 'DocumentCreate'])
     ->middleware('evocms-user-access:DocumentCreate')
     ->name('evocms-user-document-create');
+
+//отправка формы без проверки прав
+Route::post('/evocms-user/send-form', [Controller::class, 'SendForm'])
+    ->name('evocms-user-send-form');
+
+//отправка формы с проверкой роли авторизованного пользователя
+Route::post('/evocms-user/send-form-auth', [Controller::class, 'SendForm'])
+    ->middleware('evocms-user-access:SendFormAuth')
+    ->name('evocms-user-send-form-auth');
 

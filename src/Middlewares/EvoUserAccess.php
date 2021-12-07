@@ -138,10 +138,12 @@ class EvoUserAccess
                 }
                 $arr['user'] = $uid;
                 break;
+            //просматривают все документы только роли
             case 'DocumentList':
-                //просматривают все документы только роли
+            //документы могут создавать только по роли
             case 'DocumentCreate':
-                //документы могут создавать только по роли
+            //отправка форм также разруливается ролями
+            case 'SendFormAuth':
                 $arr['user'] = -1;
                 break;
             case 'DocumentObject':

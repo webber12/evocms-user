@@ -95,4 +95,9 @@ return [
         'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
     ],
 
+    "SendFormAuthAccessRules" => [
+        'roles' => [ 2 ],
+        'custom' => "classname::methodname",
+    ],
+
 ];
