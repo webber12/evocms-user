@@ -165,6 +165,15 @@ class EvoUserAccess
                 }
                 $arr['user'] = $uid;
                 break;
+            case 'OrderInfo':
+            case 'OrderCancel':
+            case 'OrderRepeat':
+                $arr['id'] = array_pop($q);
+                $uid = evo()->db->getValue("select customer_id from " . evo()->getFullTableName("commerce_orders") . " where id=" . $arr['id'] . " LIMIT 0,1");
+                if(!empty($uid)) {
+                    $arr['user'] = $uid;
+                }
+                break;
             case 'DocumentInfo':
                 $arr['id'] = array_pop($q);
                 $arr['user'] = array_pop($q);

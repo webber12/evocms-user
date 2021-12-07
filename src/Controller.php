@@ -77,6 +77,21 @@ class Controller
         return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
     }
 
+    public function OrderInfo($id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+    }
+
+    public function OrderCancel($id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+    }
+
+    public function OrderRepeat($id)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+    }
+
     public function getConfig($reload = false)
     {
         if (empty($this->config) || $reload == true) {

@@ -66,3 +66,18 @@ Route::get('/evocms-user/orders/{user}', [Controller::class, 'OrderListUser'])
     ->middleware('evocms-user-access:OrderListUser')
     ->name('evocms-user-order-list-user');
 
+Route::get('/evocms-user/order/{id}', [Controller::class, 'OrderInfo'])
+    ->where('id', '[0-9]+')
+    ->middleware('evocms-user-access:OrderInfo')
+    ->name('evocms-user-order-info');
+
+Route::post('/evocms-user/order/cancel/{id}', [Controller::class, 'OrderCancel'])
+    ->where('id', '[0-9]+')
+    ->middleware('evocms-user-access:OrderCancel')
+    ->name('evocms-user-order-cancel');
+
+Route::post('/evocms-user/order/repeat/{id}', [Controller::class, 'OrderRepeat'])
+    ->where('id', '[0-9]+')
+    ->middleware('evocms-user-access:OrderRepeat')
+    ->name('evocms-user-order-repeat');
+
