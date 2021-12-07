@@ -108,4 +108,6 @@ return [
     "OrderCancelStatus" => 5,
     "OrderCancelAvailableStatuses" => [ 1, 2 ], //отменить можно только новый заказ и заказ в обработке
 
+    "OrderRepeatCartName" => trans('products'),
+
 ];

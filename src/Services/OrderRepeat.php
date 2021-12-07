@@ -30,7 +30,8 @@ class OrderRepeat extends Service
             ];
         }
         if(!empty($add)) {
-            $cart = ci()->carts->getCart('products');
+            $cartName = $this->getCfg("OrderRepeatCartName", 'products');
+            $cart = ci()->carts->getCart($cartName);
             $response = $cart->addMultiple($add);
         } else {
             $errors['common'][] = 'empty order';
