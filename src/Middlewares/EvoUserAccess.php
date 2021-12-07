@@ -144,6 +144,8 @@ class EvoUserAccess
             case 'DocumentCreate':
             //отправка форм также разруливается ролями
             case 'SendFormAuth':
+            //список всех заказов разруливается ролями
+            case 'OrderList':
                 $arr['user'] = -1;
                 break;
             case 'DocumentObject':

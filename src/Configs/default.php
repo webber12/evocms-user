@@ -40,7 +40,7 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 1 ],
+        'roles' => [ 2 ],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [
@@ -99,5 +99,10 @@ return [
         'roles' => [ 2 ],
         'custom' => "classname::methodname",
     ],
+
+    "OrderListPrepare" => function($data, $modx, $DL, $eDL) use ($fields, &$index) {
+        //$data['custom_field'] = 'custom_field_from_prepare';
+        return $data;
+    },
 
 ];

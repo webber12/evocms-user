@@ -67,6 +67,16 @@ class Controller
         return $this->loadService(__FUNCTION__)->process();
     }
 
+    public function OrderList()
+    {
+        return $this->loadService(__FUNCTION__)->process();
+    }
+
+    public function OrderListUser($user)
+    {
+        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+    }
+
     public function getConfig($reload = false)
     {
         if (empty($this->config) || $reload == true) {
