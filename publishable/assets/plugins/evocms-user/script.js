@@ -75,5 +75,8 @@ $(document).ready(function(){
     $(document).on("evocms-user-profile-success", function(e, element, msg){
         alert('профиль успешно отредактирован');
     })
+    $(document).on("evocms-user-order/repeat-success", function(e, actionUser, actionId, element, msg){
+        Commerce.reloadCarts();
+    })
 */
 })
