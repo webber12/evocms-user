@@ -26,8 +26,6 @@ class Service
             }
         }
         $this->loadConfig($config);
-        print_r($this->config);
-        die();
         $this->loadCurrentUser();
     }
 
