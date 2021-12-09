@@ -42,7 +42,6 @@ class DocumentList extends Service
             $res = $res->withTVs($tvs);
         }
         $filters = $this->getCfg("DocumentListFilters", [] );
-        //print_r($filters);die();
         $res = (new Filters( $filters ))->injectFilters($res);
 
         $res = $res->paginate($display)

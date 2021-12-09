@@ -62,7 +62,7 @@ return [
     "DocumentListUserSortBy" => "id",
     "DocumentListUserSortDir" => "DESC",
     "DocumentListUserFields" => "id,pagetitle,longtitle,alias,createdby",
-    "DocumentListUserTVs" => "image",
+    "DocumentListUserTvs" => "image",
     "DocumentListUserOnlyActive" => false,
     "DocumentListUserShowUndeleted" => true,
 

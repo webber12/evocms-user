@@ -21,9 +21,26 @@
 
 ```$profile = app('evouser')->do('profileInfo', [ 'user' => $currentUser ]);```
 
+
+
+Список произвольных опубликованных документов с шаблоном 3, словом "товар" в заголовке и price>=20 (tv) - постранично
+```
+$documents = app('evouser')->do('documentList', [], [
+    'fields' => 'id,pagetitle',
+    'tvs' => 'price,image',
+    'onlyActive' => true,
+    'display' => 2,
+    'filters' => [
+        'pagetitle' => 'товар',
+        'template' => 3,
+        'price' => '>=20',
+    ]
+]);
+```
+
 Список документов, созданных текущим пользователем (с фильтром и постраничным выводом)
 ```
-$documents = app('evouser')->do('documentList', [ 'user' => $currentUser ], [
+$documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser ], [
     'fields' => 'id,pagetitle',
     'tvs' => 'price,image',
     'onlyActive' => true,
