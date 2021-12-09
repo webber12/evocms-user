@@ -27,6 +27,7 @@ class Service
                 evo()->sendRedirect(evo()->makeUrl($logoutId));
             }
         }
+
         $this->loadConfig($config);
         $this->loadCurrentUser();
     }

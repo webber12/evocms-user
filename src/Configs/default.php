@@ -40,7 +40,7 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 2 ],
+        'roles' => [ 1 ],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [

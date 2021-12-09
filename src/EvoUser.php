@@ -2,26 +2,46 @@
 
 namespace EvolutionCMS\EvoUser;
 
+use EvolutionCMS\EvoUser\Helpers\CheckAccess;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 
 class EvoUser
 {
+
+    public $checkAccess = true;
+
     public function __construct(){}
 
-    public function do($ServiceName, $params = [], $config = [])
+    public function withoutRules()
+    {
+        $this->checkAccess = false;
+        return $this;
+    }
+
+    public function do($serviceName, $params = [], $config = [])
     {
         $config = array_merge($config, ['ResponseType' => 'array']);
-        $className = $this->getClassName($ServiceName);
+        $className = $this->getClassName($serviceName);
         $methodName = 'process';
         if(isset($params['methodName'])) {
             $methodName = $params['methodName'];
             unset($params['methodName']);
         }
-        if ($ServiceName == 'user') {
+        if ($serviceName == 'user') {
             $response = $this->getCurrentUser($params);
         } else if (is_callable([ $className, $methodName ])) {
-            $response = (new $className($config))->$methodName($params);
+            if ($this->checkAccess == true) {
+                $access = (new CheckAccess($serviceName, $params))->checkRules();
+                if (!$access) {
+                    $response = ['error' => 'access denied'];
+                } else {
+                    $response = (new $className($config))->$methodName($params);
+                }
+            } else {
+                $response = (new $className($config))->$methodName($params);
+            }
         } else {
             $response = ['error' => 'undefined method ' . $methodName . ' from ' . $className];
         }

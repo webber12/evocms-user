@@ -28,6 +28,7 @@ Route::get('/evocms-user/documents', [Controller::class, 'DocumentList'])
     ->middleware('evocms-user-access:DocumentList')
     ->name('evocms-user-document-list');
 
+
 Route::get('/evocms-user/documents/{user}', [Controller::class, 'DocumentListUser'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-csrf')
@@ -37,7 +38,7 @@ Route::get('/evocms-user/documents/{user}', [Controller::class, 'DocumentListUse
 Route::get('/evocms-user/documents/{user}/{id}', [Controller::class, 'DocumentInfo'])
     ->where('user', '[0-9]+')
     ->where('id', '[0-9]+')
-    ->middleware('evocms-user-csrf')
+    //->middleware('evocms-user-csrf')
     ->middleware('evocms-user-access:DocumentInfo')
     ->name('evocms-user-document-info');
 
