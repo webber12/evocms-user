@@ -18,7 +18,6 @@ class Service
 
     public function __construct($config = [])
     {
-        $this->config = $config;
         if(isset($_GET['logout'])) {
             (new UserManager())->logout();
             $logoutId = $this->getCfg( "LogoutRedirectId", 0);
@@ -26,6 +25,9 @@ class Service
                 evo()->sendRedirect(evo()->makeUrl($logoutId));
             }
         }
+        $this->loadConfig($config);
+        print_r($this->config);
+        die();
         $this->loadCurrentUser();
     }
 
@@ -56,7 +58,12 @@ class Service
 
     protected function getCfg($key, $default = false)
     {
-        return config( "evocms-user." . $key, $default);
+        if(array_key_exists($key, $this->config)) {
+            $value = $this->config[$key];
+        } else {
+            $value = config( "evocms-user." . $key, $default);
+        }
+        return $value;
     }
 
     protected function clean($str)
@@ -116,6 +123,20 @@ class Service
         $arr['role'] = evo()->db->getValue("SELECT role FROM " . evo()->getFullTablename("user_attributes") . " where internalKey=" . $arr['internalKey']);
         $arr['tvs'] = $tvs;
         return $arr;
+    }
+
+    protected function loadConfig($config)
+    {
+        $classname = $this->getClassName();
+        foreach($config as $k => $v) {
+            $k = trim($k);
+            if(strpos($k, $classname) === false || strpos($k, $classname) != 0) {
+                $this->config[$classname . $k] = $v;
+            } else {
+                $this->config[$k] = $v;
+            }
+        }
+        return;
     }
 
 }

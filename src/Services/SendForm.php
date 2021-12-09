@@ -66,11 +66,14 @@ class SendForm extends Service
 
     protected function getCfg($key, $default = false)
     {
-        if(isset($this->customConfig[$key])) {
-            return $this->customConfig[$key];
+        if (array_key_exists($key, $this->customConfig)) {
+            $value = $this->customConfig[$key];
+        } else if(array_key_exists($key, $this->config)) {
+            $value = $this->config[$key];
         } else {
-            return config("evocms-user." . $key, $default);
+            $value = config("evocms-user." . $key, $default);
         }
+        return $value;
     }
 
     protected function makeData()
