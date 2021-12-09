@@ -52,10 +52,11 @@ return [
     "DocumentListSortBy" => "id",
     "DocumentListSortDir" => "DESC",
     "DocumentListFields" => "id,pagetitle,longtitle,alias,createdby",
-    "DocumentListTVs" => "image",
+    "DocumentListTvs" => "image",
     "DocumentListOnlyActive" => false,
     "DocumentListShowUndeleted" => true,
 
+    "DocumentListUserService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
     "DocumentListUserService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
     "DocumentListUserDisplay" => 15,
     "DocumentListUserSortBy" => "id",

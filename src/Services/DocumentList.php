@@ -24,7 +24,7 @@ class DocumentList extends Service
         $showUndeleted = $this->getCfg("DocumentListShowUndeleted", true);
         $fields = $this->getCfg("DocumentListFields", 'id,pagetitle');
         $columns = array_map('trim', explode(',', $fields));
-        $tvs = $this->getCfg("DocumentListTVs", '');
+        $tvs = $this->getCfg("DocumentListTvs", '');
 
         if(!empty($tvs)) {
             $tvs = array_map('trim', explode(',', $tvs));
@@ -41,8 +41,9 @@ class DocumentList extends Service
         if(!empty($tvs)) {
             $res = $res->withTVs($tvs);
         }
-
-        $res = (new Filters())->injectFilters($res);
+        $filters = $this->getCfg("DocumentListFilters", [] );
+        //print_r($filters);die();
+        $res = (new Filters( $filters ))->injectFilters($res);
 
         $res = $res->paginate($display)
             ->toArray();

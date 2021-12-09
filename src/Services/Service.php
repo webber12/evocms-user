@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use EvolutionCMS\Models\UserAttribute;
 use EvolutionCMS\UserManager\Services\UserManager;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 
 class Service
 {
@@ -36,7 +38,16 @@ class Service
 
     protected function makeResponse($arr = [])
     {
-        $response = Response::send($arr);
+        $classname = $this->getClassName();
+        $responseType = isset($this->config[ $classname . 'ResponseType' ]) ? $this->config[ $classname . 'ResponseType' ] : 'json';
+        switch($responseType) {
+            case 'array':
+                $response = $arr;
+                break;
+            default:
+                $response = Response::send($arr);
+                break;
+        }
         return $response;
     }
 
@@ -127,13 +138,34 @@ class Service
     {
         $classname = $this->getClassName();
         foreach($config as $k => $v) {
-            $k = trim($k);
+            $k = Str::ucfirst(trim($k));
             if(strpos($k, $classname) === false || strpos($k, $classname) != 0) {
                 $this->config[$classname . $k] = $v;
             } else {
                 $this->config[$k] = $v;
             }
         }
+        return;
+    }
+
+    protected function loadCustomConfig($path)
+    {
+        $classname = $this->getClassName();
+        $customConfig = [];
+        $path = EVO_CORE_PATH . 'custom/evocms-user/configs/' . $path;
+        if(is_file($path)) {
+            $rules = include_once($path);
+            foreach($rules as $k => $v) {
+                $k = Str::ucfirst(trim($k));
+                if(strpos($k, $classname) === false || strpos($k, $classname) != 0) {
+                    $customConfig[$classname . $k] = $v;
+                } else {
+                    $customConfig[$k] = $v;
+                }
+            }
+
+        }
+        $this->config = array_merge($this->config, $customConfig);
         return;
     }
 

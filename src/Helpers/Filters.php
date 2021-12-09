@@ -4,8 +4,12 @@ use EvolutionCMS\Models\SiteTmplvar;
 
 class Filters
 {
+    //массив определенных фильтров
+    protected $f;
 
-    public function __construct() {}
+    public function __construct($filters = []) {
+        $this->f = $filters;
+    }
 
     public function injectFilters($query)
     {
@@ -92,7 +96,8 @@ class Filters
 
     protected function getFilterRequest()
     {
-        return request()->input('f', []);
+        $f = request()->input('f', []);
+        return array_merge($this->f, $f);
     }
 
     protected function getColumnsFromQuery()

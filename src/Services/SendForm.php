@@ -16,15 +16,13 @@ class SendForm extends Service
     public function process($params = [])
     {
 
-        $this->loadCustomConfig();
-
         $errors = [];
 
         if (request()->has(['formid'])) {
 
             $this->formId = e(request()->input('formid'));
 
-            $this->loadCustomConfig();
+            $this->loadCustomConfig('forms/' . $this->formId . '.php');
 
             $data = $this->makeData();
 
@@ -53,27 +51,6 @@ class SendForm extends Service
             $response = [ 'status' => 'ok', 'message' => 'success form send' ];
         }
         return $this->makeResponse($response);
-    }
-
-    protected function loadCustomConfig()
-    {
-        $path = EVO_CORE_PATH . 'custom/evocms-user/configs/forms/' . $this->formId . '.php';
-        if(is_file($path)) {
-            $this->customConfig = include_once($path);
-        }
-        return;
-    }
-
-    protected function getCfg($key, $default = false)
-    {
-        if (array_key_exists($key, $this->customConfig)) {
-            $value = $this->customConfig[$key];
-        } else if(array_key_exists($key, $this->config)) {
-            $value = $this->config[$key];
-        } else {
-            $value = config("evocms-user." . $key, $default);
-        }
-        return $value;
     }
 
     protected function makeData()

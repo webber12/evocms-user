@@ -18,7 +18,7 @@ class OrderCancel extends Service
         $processor = ci()->commerce->loadProcessor();
         $order = $processor->loadOrder($order_id, true);
         if (in_array($order['status_id'], $this->getCfg("OrderCancelAvailableStatuses", []))) {
-            $customErrors = $this->makeCustomValidator($data);
+            //$customErrors = $this->makeCustomValidator($data);
             if (!empty($customErrors)) {
                 $errors['customErrors'] = $customErrors;
             } else {
