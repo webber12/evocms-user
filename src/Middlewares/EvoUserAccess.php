@@ -23,14 +23,14 @@ class EvoUserAccess
         $flag = false;
         $rules = $this->getRules($action);
         $qParams = $this->getParamsFromQuery($action);
-        if(!empty($rules)) {
+        if (!empty($rules)) {
             $user = $this->isLogged($rules);
-            if(!empty($user)) {
+            if (!empty($user)) {
                 $role = $user['role'];
                 $roles = $rules['roles'] ?? [];
                 $flag = $this->checkCurrent($user['id'], $qParams['user'], $rules) || $this->checkRoles($role, $roles);
-                if(!$flag && !empty($rules['custom']) && is_callable($rules['custom'])) {
-                    $flag = call_user_func($rules['custom'], [ 'user' => $user, 'rules' => $rules ]);
+                if (!$flag && !empty($rules['custom']) && is_callable($rules['custom'])) {
+                    $flag = call_user_func($rules['custom'], ['user' => $user, 'rules' => $rules]);
                 }
             }
         }
@@ -95,9 +95,16 @@ class EvoUserAccess
     {
         $flag = true;
         if(!empty($rules['current'])) {
+            //если правило задано и текущий юзер не равен запрашиваемому
             if ($query_user != $uid) {
                 $flag = false;
             }
+        } else if(array_key_exists('current', $rules) && $rules['current'] == false) {
+            //правило прямо задано в false
+            $flag = false;
+        } else if (!array_key_exists('current', $rules)) {
+            //правило вообще не задано
+            $flag = false;
         }
         return $flag;
     }
