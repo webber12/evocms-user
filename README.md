@@ -71,3 +71,28 @@ $documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser
 
 ```$order = app('evouser')->do('orderInfo', [ 'id' => 4 ]);```
 
+#### Примечание
+В случае возникновения ошибки при выполнении установочной команды (фича evo) 
+```
+php artisan vendor:publish
+```
+примерно следующего содержания
+```
+core/custom/evocms-user/configs/evouser.php): failed to open stream:
+```
+необходимо зайти в файл сервис-провайдера по адресу core\vendor\webber12\evocms-user\src\EvoUserServiceProvider.php и закомментировать строки, отвечающие за загрузку
+конфигурации
+```
+        $this->mergeConfigFrom(
+            EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evocms-user'
+        );
+        $this->mergeConfigFrom(
+            __DIR__ . '/Configs/default.php', 'evocms-user'
+        );
+```
+выполнить еще раз команду 
+
+```php artisan vendor:publish --provider="EvolutionCMS\EvoUser\EvoUserServiceProvider"```
+
+и после успешного выполнения раскомментировать данные строки в сервис-провайдере
+
