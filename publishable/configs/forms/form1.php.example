@@ -1,0 +1,22 @@
+<?php
+//custom config for form with formid=form1
+
+return [
+    "to" => "web-ber12@yandex.ru",
+    "subject" => "Новое письмо с сайта",
+    "customRules" => [
+        'name' => 'required|min:6',
+        'email' => 'email',
+    ],
+    "customMessages" => [
+        'name.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Name' ]),
+        'name.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Name' ]),
+        'email.email' => trans('evocms-user-core::messages.valid_email', ['field' => 'Email' ]),
+    ],
+    "prepare" => function($data) {
+        $data['name'] .= ' - prepared ';
+        return $data;
+    },
+    "reportTpl" => '@CODE:[+name+]<br>[+email+]<br>[+message+]',
+
+];
