@@ -70,3 +70,5 @@ $documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser
 Получение информации о заказе с id=4 (данные о заказе, списке товаров и истории
 
 ```$order = app('evouser')->do('orderInfo', [ 'id' => 4 ]);```
+
+test

@@ -63,7 +63,9 @@ var EvoCmsUser = {
     }
 }
 $(document).ready(function(){
+
     EvoCmsUser.init();
+
 /*
     //// event examples ////
     $(document).on("evocms-user-auth-error", function(e, actionUser, actionId, element, msg){
