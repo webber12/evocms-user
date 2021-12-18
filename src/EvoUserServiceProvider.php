@@ -43,12 +43,20 @@ class EvoUserServiceProvider extends ServiceProvider
         //usage trans('evousercustom::messages.line', [ 'field' => 'Username' ])
         $this->loadTranslationsFrom(EVO_CORE_PATH . 'custom/evocms-user/lang', 'evocms-user-custom');
 
-        $this->mergeConfigFrom(
+        $this->mergeConfigFromCustom(
             EVO_CORE_PATH . 'custom/evocms-user/configs/evouser.php', 'evocms-user'
         );
-        $this->mergeConfigFrom(
+        $this->mergeConfigFromCustom(
             __DIR__ . '/Configs/default.php', 'evocms-user'
         );
 
+    }
+
+    protected function mergeConfigFromCustom($path, $key)
+    {
+        if(is_file($path)) {
+            $this->mergeConfigFrom($path, $key);
+        }
+        return $this;
     }
 }
