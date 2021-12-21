@@ -70,3 +70,97 @@ $documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser
 Получение информации о заказе с id=4 (данные о заказе, списке товаров и истории
 
 ```$order = app('evouser')->do('orderInfo', [ 'id' => 4 ]);```
+
+#### Пример формы авторизации
+```
+<form data-evocms-user-action="auth">
+    <p><b>ВХОД</b></p>
+    @csrf
+    <input type="text" name="username">
+    <div data-error data-error-username></div>
+    <input type="text" name="password">
+    <div data-error data-error-password></div>
+    <div data-error data-error-common></div>
+    <input type="submit" value="ok">
+</form>
+```
+
+#### Пример формы редактирования профиля текущего пользователя
+```
+    Вы вошли как <b><a href="?logout">{{ $user['username'] }}</a></b>
+    <hr><hr>
+    <form data-evocms-user-action="profile" data-evocms-user-user="{{ $user['id'] }}">
+        <p><b>Редактирование</b></p>
+        @csrf
+        <input type="text" name="fullname" value="{{ $user['fullname'] ?? '' }}">
+        <div data-error data-error-fullname></div>
+        <input type="text" name="first_name" value="{{ $user['first_name'] ?? '' }}">
+        <div data-error data-error-first_name></div>
+        <div data-error data-error-common></div>
+        <input type="submit" value="ok">
+    </form>
+```
+
+#### Пример формы создания документа c TV image
+```
+<form data-evocms-user-action="document">
+    <p><b>СОЗДАНИЕ ДОКУМЕНТА</b></p>
+    @csrf
+    <input type="text" name="pagetitle">
+    <div data-error data-error-pagetitle></div>
+    <input type="text" name="longtitle">
+    <div data-error data-error-longtitle></div>
+    <input type="text" name="image">
+    <div data-error data-error-image></div>
+    <div data-error data-error-common></div>
+    <input type="submit" value="ok">
+</form>
+```
+
+#### Пример редактирования документа с id=7
+```
+<form data-evocms-user-action="document" data-evocms-user-id="7">
+    <p><b>РЕДАКТИРОВАНИЕ ДОКУМЕНТА</b></p>
+    @csrf
+    <input type="text" name="pagetitle">
+    <div data-error data-error-pagetitle></div>
+    <input type="text" name="longtitle">
+    <div data-error data-error-longtitle></div>
+    <input type="text" name="image">
+    <div data-error data-error-image></div>
+    <div data-error data-error-common></div>
+    <input type="submit" value="ok">
+</form>
+```
+
+#### Пример формы для повторения заказа с id=2 (добавление в корзину товаров этого заказа)
+```
+<form data-evocms-user-action="order/repeat" data-evocms-user-id="2">
+    <p><b>Повторение заказа номер 2 выглядит так</b></p>
+    @csrf
+    <div data-error data-error-common></div>
+    <input type="submit" value="ok">
+</form>
+```
+
+#### Пример jQuery-скрипта перегрузки страницы после успешной авторизации
+```
+    $(document).on("evocms-user-auth-success", function(e, actionUser, actionId, element, msg){
+        location.reload();
+    })
+```
+
+#### Пример jQuery-скрипта для обработки редактирования профиля
+```
+    $(document).on("evocms-user-profile-before", function(e, actionUser, actionId, element){
+        alert('сейчас отправим данные пользователя ' + actionUser + ' на редактирование и подождем, что будет');
+    })
+    $(document).on("evocms-user-profile-error", function(e, actionUser, actionId, element, msg){
+        console.log(msg);
+        alert('ошибки при редактировании профиля, загляните в консоль за подробностями');
+    })
+    $(document).on("evocms-user-profile-success", function(e, actionUser, actionId, element, msg){
+        alert('профиль пользователя ' + actionUser + ' успешно отредактирован');
+    })
+```
+
