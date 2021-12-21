@@ -103,6 +103,19 @@ class Service
         $messages = $this->getCfg($classname . 'CustomMessages', []);
         if (!empty($rules) && !empty($messages)) {
             $validator = Validator::make($data, $rules, $messages);
+            $customValidator = $this->getCfg($classname . 'CustomValidator', false);
+            if($customValidator !== false && is_callable($customValidator)) {
+                $validator->after(function ($validator) use ($customValidator, $data) {
+                    $errors = call_user_func($customValidator, $data);
+                    if(!empty($errors)) {
+                        foreach($errors as $field => $message) {
+                            $validator->errors()->add(
+                                $field, $message
+                            );
+                        }
+                    }
+                });
+            }
             $errors = $validator->errors()->toArray();
         }
         return $errors;

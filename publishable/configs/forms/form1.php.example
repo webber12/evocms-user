@@ -17,6 +17,16 @@ return [
         $data['name'] .= ' - prepared ';
         return $data;
     },
+    "customValidator" => function($data) {
+        $errors = [];
+        if (empty($data['name'])) {
+            $errors['name'] = trans('evocms-user-core::messages.required_field', [ 'field' => 'Name' ]);
+        }
+        if (empty($data['email'])) {
+            $errors['email'] = trans('evocms-user-core::messages.required_field', [ 'field' => 'Email' ]);
+        }
+        return $errors;
+    },
     "reportTpl" => '@CODE:[+name+]<br>[+email+]<br>[+message+]',
 
 ];
