@@ -92,6 +92,11 @@ class Controller
         return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
     }
 
+    public function EasyNewsLetter()
+    {
+        return $this->loadService(__FUNCTION__)->process();
+    }
+
     public function getConfig($reload = false)
     {
         if (empty($this->config) || $reload == true) {

@@ -48,7 +48,7 @@ var EvoCmsUser = {
                             //console.log(k + ' ' + fieldErrors[k]);
                             form.find('[data-error-' + k + ']').html(fieldErrors[k]);
                         }
-                        form.find('[data-error-common').html(commonErrors.join("<br>"));
+                        form.find('[data-error-common]').html(commonErrors.join("<br>"));
                         $(document).trigger("evocms-user-" + action + "-error", [ actionUser, actionId, form, msg ]);
                     } else {
                         $(document).trigger("evocms-user-" + action + "-success", [ actionUser, actionId, form, msg ]);

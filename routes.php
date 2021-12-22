@@ -99,3 +99,7 @@ Route::post('/evocms-user/order/repeat/{id}', [Controller::class, 'OrderRepeat']
     ->middleware('evocms-user-access:OrderRepeat')
     ->name('evocms-user-order-repeat');
 
+Route::post('/evocms-user/easynewsletter', [Controller::class, 'EasyNewsLetter'])
+    ->middleware('evocms-user-csrf')
+    ->name('evocms-user-easynewsletter');
+

@@ -164,3 +164,20 @@ $documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser
     })
 ```
 
+#### Пример формы для добавления email в модуль рассылки EasyNewsLetter
+```
+<form data-evocms-user-action="easynewsletter">
+    @csrf
+    <input type="email" name="email" placeholder="Введите ваш e-mail" required>
+    <div data-error data-error-email></div>
+    <div data-error data-error-common></div>
+</form>
+```
+
+#### Пример скрипта для оповещения об успешной подписке EasyNewsLetter
+```
+    $(document).on("evocms-user-easynewsletter-success", function(e, actionUser, actionId, element, msg){
+        element.find('[data-error-common]').html('<span class="success">Вы успешно подписались на рассылку!</span>');
+    })
+```
+
