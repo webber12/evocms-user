@@ -22,6 +22,7 @@ class EvoUser
 
     public function do($serviceName, $params = [], $config = [])
     {
+        $serviceName = Str::ucfirst($serviceName);
         $config = array_merge($config, ['ResponseType' => 'array']);
         $className = $this->getClassName($serviceName);
         $methodName = 'process';
@@ -29,7 +30,7 @@ class EvoUser
             $methodName = $params['methodName'];
             unset($params['methodName']);
         }
-        if ($serviceName == 'user') {
+        if ($serviceName == 'User') {
             $response = $this->getCurrentUser($params);
         } else if (is_callable([ $className, $methodName ])) {
             if ($this->checkAccess == true) {
