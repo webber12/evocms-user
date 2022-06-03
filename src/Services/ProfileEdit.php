@@ -33,9 +33,21 @@ class ProfileEdit extends Service
                     $user = (new UserManager())->edit($data, true, false);
                     if(!empty($user)) {
                         $user = json_decode($user, 1);
-                    }
-                    if(!empty($user['id'])) {
-                        $userTVs = (new UserManager())->saveValues($data, true, false);
+                        if(!empty($user['id'])) {
+                            //сохраняем TV пользователя
+                            $userTVs = (new UserManager())->saveValues($data, true, false);
+                            if (request()->has(['chpwd'])) {
+                                //пытаемся сменить пароль
+                                try {
+                                    $hash = (new UserManager())->changePassword($data);
+                                } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
+                                    $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
+                                    $errors['validation'] = $validateErrors;
+                                } catch (\EvolutionCMS\Exceptions\ServiceActionException $exception) {
+                                    $errors['common'][] = $exception->getMessage();
+                                }
+                            }
+                        }
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
