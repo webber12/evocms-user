@@ -26,6 +26,8 @@ class Register extends Service
                     if(!empty($user->id) && !empty($data['role_id'])) {
                         //$data['role_id'] готовим в RegisterPrepare
                         $user = (new UserManager())->setRole([ 'id' => $user->id, 'role' => $data['role_id'] ]);
+                        //сохраняем TV пользователя
+                        $userTVs = (new UserManager())->saveValues(array_merge($data, [ 'id' => $user->id ]), true, false);
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
