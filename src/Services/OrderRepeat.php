@@ -18,16 +18,21 @@ class OrderRepeat extends Service
         $processor = ci()->commerce->loadProcessor();
         $order = $processor->loadOrder($order_id, true);
         $items = $processor->getCart()->getItems();
+        $active = SiteContent::select(['id'])->whereIn('id', array_column($items, 'id'))
+            ->active()->get()->pluck('id')->toArray();
 
         $add = [];
         foreach($items as $item) {
-            $add[] = [
-                'id' => $item['id'],
-                'count' => $item['count'],
-                'name' => $item['name'],
-                'options' => $item['options'],
-                'meta' => $item['meta'],
-            ];
+            //можно добавить только активные (неудаленные опубликованные) товары
+            if(in_array($item['id'], $active)) {
+                $add[] = [
+                    'id' => $item['id'],
+                    'count' => $item['count'],
+                    'name' => $item['name'],
+                    'options' => $item['options'],
+                    'meta' => $item['meta'],
+                ];
+            }
         }
         if(!empty($add)) {
             $cartName = $this->getCfg("OrderRepeatCartName", 'products');
