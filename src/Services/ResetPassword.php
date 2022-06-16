@@ -60,7 +60,7 @@ class ResetPassword extends Service
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => $hash, 'step' => 1 ];
+            $response = [ 'status' => 'ok', 'message' => '', 'step' => 1 ];
         }
         return $response;
     }
@@ -91,7 +91,7 @@ class ResetPassword extends Service
         if (!empty($errors)) {
             $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = ['status' => 'ok', 'message' => $hash, 'step' => 2];
+            $response = ['status' => 'ok', 'message' => '', 'step' => 2];
         }
         return $response;
     }
