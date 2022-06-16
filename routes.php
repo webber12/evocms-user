@@ -103,3 +103,6 @@ Route::post('/evocms-user/easynewsletter', [Controller::class, 'EasyNewsLetter']
     ->middleware('evocms-user-csrf')
     ->name('evocms-user-easynewsletter');
 
+Route::post('/evocms-user/reset-password', [Controller::class, 'ResetPassword'])
+    ->middleware('evocms-user-csrf')
+    ->name('evocms-user-reset-password');

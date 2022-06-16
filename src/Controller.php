@@ -97,6 +97,11 @@ class Controller
         return $this->loadService(__FUNCTION__)->process();
     }
 
+    public function ResetPassword()
+    {
+        return $this->loadService(__FUNCTION__)->process();
+    }
+
     public function getConfig($reload = false)
     {
         if (empty($this->config) || $reload == true) {
