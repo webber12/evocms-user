@@ -100,12 +100,12 @@ return [
         'roles' => [ 2 ],
         'custom' => "classname::methodname",
     ],
-
+/*
     "OrderListPrepare" => function($data, $modx, $DL, $eDL) use ($fields, &$index) {
         //$data['custom_field'] = 'custom_field_from_prepare';
         return $data;
     },
-
+*/
     "OrderCancelStatus" => 5,
     "OrderCancelAvailableStatuses" => [ 1, 2 ], //отменить можно только новый заказ и заказ в обработке
 
