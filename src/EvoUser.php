@@ -32,7 +32,7 @@ class EvoUser
         }
         if ($serviceName == 'User') {
             $response = $this->getCurrentUser($params);
-        } else if (is_callable([ $className, $methodName ])) {
+        } else if (class_exists($className) && is_callable([ new $className($config), $methodName ])) {
             if ($this->checkAccess == true) {
                 $access = (new CheckAccess($serviceName, $params))->checkRules();
                 if (!$access) {
