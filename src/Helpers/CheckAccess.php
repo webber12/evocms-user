@@ -70,12 +70,13 @@ class CheckAccess
 
     protected function getUser()
     {
-        return evo()->getPlaceholder('evocms-user');
+        $user = evo()->getPlaceholder('evocms-user') ?: '[]';
+        return json_decode($user, 1);
     }
 
     protected function setUser($user)
     {
-        return evo()->setPlaceholder('evocms-user', $user);
+        return evo()->setPlaceholder('evocms-user', json_encode($user));
     }
 
     protected function reloadUser($uid)

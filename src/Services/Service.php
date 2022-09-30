@@ -55,7 +55,8 @@ class Service
     protected function loadCurrentUser()
     {
         //плейсхолдер ставится в момент проверки доступа в middleware EvoUserAccess
-        $user = evo()->getPlaceholder('evocms-user');
+        $user_json = evo()->getPlaceholder('evocms-user') ?: '[]';
+        $user = json_decode($user_json, 1);
         $this->user = !empty($user) ? $user : [];
         return true;
     }
