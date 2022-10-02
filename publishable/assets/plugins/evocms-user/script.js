@@ -11,6 +11,10 @@ var EvoCmsUser = {
             let actionUser = $(this).data("evocmsUserUser");
             let actionId = $(this).data("evocmsUserId");
             let fd = new FormData(form[0]);
+            let change = $(document).triggerHandler("evocms-user-" + action + "-data", [ actionUser, actionId, form, fd ]);
+            if(typeof change != "undefined") {
+                fd = change;
+            }
             let url = action;
             if(typeof actionUser !== "undefined") {
                 url += '/' + actionUser;
