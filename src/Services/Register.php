@@ -11,7 +11,7 @@ class Register extends Service
     public function process($params = [])
     {
         $errors = [];
-        if (request()->has(['email', 'password'])) {
+        if (request()->has('email') && (request()->has('password') || request()->has('sendEmail') )) {
 
             $data = $this->makeData();
 
@@ -28,6 +28,17 @@ class Register extends Service
                         $user = (new UserManager())->setRole([ 'id' => $user->id, 'role' => $data['role_id'] ]);
                         //сохраняем TV пользователя
                         $userTVs = (new UserManager())->saveValues(array_merge($data, [ 'id' => $user->id ]), true, false);
+                        if(request()->has('sendEmail')) {
+                            //необходимо сгенерировать пароль и выслать его на почту
+                            $password = (new UserManager())->generateAndSavePassword([ 'id' => $user->id ]);
+                            $body = $this->getCfg("RegisterSendPasswordBody", "@CODE:Ваш пароль доступа к сайту " . evo()->getConfig('site_name') . ": [+password+]");
+                            $params = [
+                                'to' => $data['email'],
+                                'subject' => $this->getCfg("RegisterSendPasswordSubject", "Пароль доступа к сайту " . evo()->getConfig('site_name')),
+                                'body' => app('DLTemplate')->parseChunk($body, [ 'password' => $password ]),
+                            ];
+                            evo()->sendmail($params, '', []);
+                        }
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
@@ -55,7 +66,8 @@ class Register extends Service
     protected function makeData()
     {
         $email = $this->clean(request()->input("email"));
-        $password = $this->clean(request()->input("password"));
+        //если пароль есть - берем его, если нет - задаем случайный (затем все равно сгенерируем случайный и отправим на email
+        $password = request()->has("password") ? $this->clean(request()->input("password")) : md5(microtime() . rand(100000, 1000000));
         if(request()->has(['username'])) {
             $username = $this->clean(request()->input("username"));
         } else {
