@@ -22,14 +22,17 @@ var EvoCmsUser = {
             if(typeof actionId !== "undefined") {
                 url += '/' + actionId;
             }
-            //console.log(action);
+            let contentType = false;
+            if(typeof fd == 'string') {
+                contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+            }
             $.ajax({
                 url: "/evocms-user/" + url,
                 data: fd,
                 type: "POST",
                 cache: false,
                 processData: false,
-                contentType: false,
+                contentType: contentType,
                 dataType: 'json',
                 beforeSend: function () {
                     form.css({'opacity':'.5'});
