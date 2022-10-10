@@ -26,7 +26,7 @@ class OrderList extends Service
             'paginate'        => 'pages',
         ];
 
-        $DLParams['prepare'][] = @function($data, $modx, $DL, $eDL) use ($fields, &$index) {
+        $DLParams['prepare'][] = @function($data, $modx, $DL, $eDL) use (&$index) {
             $data['fields']    = !empty($data['fields']) ? json_decode($data['fields'], true) : [];
             $data['index']     = $index;
             $data['iteration'] = ++$index;

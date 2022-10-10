@@ -20,7 +20,7 @@
 
 Данные профиля заданного пользователя
 
-```$profile = app('evouser')->do('profileInfo', [ 'user' => $currentUser ]);```
+```$profile = app('evouser')->do('ProfileInfo', [ 'user' => $currentUser ]);```
 
 
 По умолчанию при вызове сервиса проверяются права доступа, заданные в конфигурации, но данную проверку можно отключить
@@ -33,7 +33,7 @@ $documents = app('evouser')->withoutRules()->do('DocumentListUser', [ 'user' => 
 
 Список произвольных опубликованных документов с шаблоном 3, словом "товар" в заголовке и price>=20 (tv) - постранично
 ```
-$documents = app('evouser')->do('documentList', [], [
+$documents = app('evouser')->do('DocumentList', [], [
     'fields' => 'id,pagetitle',
     'tvs' => 'price,image',
     'onlyActive' => true,
@@ -48,7 +48,7 @@ $documents = app('evouser')->do('documentList', [], [
 
 Список документов, созданных текущим пользователем (с фильтром и постраничным выводом)
 ```
-$documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser ], [
+$documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser ], [
     'fields' => 'id,pagetitle',
     'tvs' => 'price,image',
     'onlyActive' => true,
@@ -62,15 +62,15 @@ $documentsUser = app('evouser')->do('documentListUser', [ 'user' => $currentUser
 
 Получение объекта $documentObject документа с id=2
 
-```$document = app('evouser')->do('documentObject', [ 'id' => 2 ]);```
+```$document = app('evouser')->do('DocumentObject', [ 'id' => 2 ]);```
 
 Получение списка заказов текущего пользователя
 
-```$orders = app('evouser')->do('orderList', [ 'user' => $currentUser ]);```
+```$orders = app('evouser')->do('OrderList', [ 'user' => $currentUser ]);```
 
 Получение информации о заказе с id=4 (данные о заказе, списке товаров и истории
 
-```$order = app('evouser')->do('orderInfo', [ 'id' => 4 ]);```
+```$order = app('evouser')->do('OrderInfo', [ 'id' => 4 ]);```
 
 #### Пример формы авторизации
 ```
