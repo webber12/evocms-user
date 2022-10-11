@@ -2,6 +2,7 @@
 namespace EvolutionCMS\EvoUser\Services;
 
 use EvolutionCMS\EvoUser\Services\Service;
+use EvolutionCMS\Models\SiteContent;
 
 class OrderRepeat extends Service
 {
