@@ -26,6 +26,10 @@ class Register extends Service
                     if(!empty($user->id) && !empty($data['role_id'])) {
                         //$data['role_id'] готовим в RegisterPrepare
                         $user = (new UserManager())->setRole([ 'id' => $user->id, 'role' => $data['role_id'] ]);
+                        //$data['user_groups'] готовим в RegisterPrepare
+                        if(!empty($data['user_groups'])) {
+                            $user = (new UserManager())->setGroups([ 'id' => $user->id, 'groups' => $data['user_groups']);
+                        }
                         //сохраняем TV пользователя
                         $userTVs = (new UserManager())->saveValues(array_merge($data, [ 'id' => $user->id ]), true, false);
                         if(request()->has('sendEmail')) {

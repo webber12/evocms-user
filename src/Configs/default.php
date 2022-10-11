@@ -24,7 +24,7 @@ return [
         'fullname.min' => trans('evocms-user-core::messages.test'),
         'first_name.min' => 'имя не короче 6 знаков',
     ],
-    "RegisterPrepare" => "classname::methodname",
+    "RegisterPrepare" => function($data){unset($data['role_id']);unset($data['user_groups']);return $data;},
 
     "ProfileService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Profile",
     "ProfileCustomFields" => [ 'first_name' ],
