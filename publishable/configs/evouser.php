@@ -12,5 +12,6 @@ return [
         $data['user_groups'] = [ 4, 7 ];
         return $data;
     },
+    "ProfileEditCustomFields" => [ 'fullname' ], //для редактирования профиля поле fullname обязательно
 */
 ];

@@ -26,17 +26,15 @@ return [
     ],
     "RegisterPrepare" => function($data){unset($data['role_id']);unset($data['user_groups']);return $data;},
 
-    "ProfileService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Profile",
-    "ProfileCustomFields" => [ 'first_name' ],
-    "ProfileCustomRules" => [
-        'fullname' => 'required|min:6',
-        'first_name' => 'required|min:6'
+    "ProfileEditService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Profile",
+    "ProfileEditCustomFields" => [ 'fullname' ],
+    "ProfileEditCustomRules" => [
+        'fullname' => 'required|min:4',
     ],
-    "ProfileCustomMessages" => [
-        'fullname.min' => 'полное имя не короче 6 знаков',
-        'first_name.min' => 'имя не короче 6 знаков',
+    "ProfileEditCustomMessages" => [
+        'fullname.min' => 'полное имя не короче 4 символов',
     ],
-    "ProfilePrepare" => "classname::methodname",
+    "ProfileEditPrepare" => "classname::methodname",
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
