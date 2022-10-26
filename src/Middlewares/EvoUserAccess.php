@@ -11,7 +11,7 @@ class EvoUserAccess
         $params = $request->route()->parameters() ?? [];
         $access = (new CheckAccess($serviceName, $params))->checkRules();
         if(!$access) {
-            return response()->json([ 'error' => 'access denied' ]);
+            return response()->json([ 'status' => 'error', 'msg' => 'access denied' ]);
         } else {
             return $next($request);
         }
