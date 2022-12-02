@@ -38,7 +38,7 @@ class SendForm extends Service
                     'subject' => !empty($data['subject']) ? $data['subject'] : $this->getCfg("SendFormSubject", "Letter form site"),
                     'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
                 ];
-                if(!evo()->sendmail($params, '', ($_FILES ?? []))) {
+                if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
                     $errors['common'][] = 'form sending error';
                 }
             }
