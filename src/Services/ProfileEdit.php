@@ -63,7 +63,7 @@ class ProfileEdit extends Service
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
             $response = [ 'status' => 'ok', 'message' => 'success edit' ];
-            $redirectId = $this->getCfg('RegisterRedirectId');
+            $redirectId = $this->getCfg('ProfileEditRedirectId');
             if(!empty($redirectId) && is_numeric($redirectId)) {
                 $response['redirect'] = evo()->makeUrl($redirectId);
             }
