@@ -128,7 +128,7 @@ class Controller
 
     protected function loadService($name)
     {
-        $serviceName = config('evouser.' . $name . 'Service');
+        $serviceName = config('evocms-user.' . $name . 'Service');
         $service = !empty($serviceName) ? $serviceName : "\\EvolutionCMS\\EvoUser\\Services\\" . $name;
         return new $service($this->config);
     }
