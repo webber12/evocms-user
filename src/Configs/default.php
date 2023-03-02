@@ -26,7 +26,7 @@ return [
     ],
     "RegisterPrepare" => function($data){unset($data['role_id']);unset($data['user_groups']);return $data;},
 
-    "ProfileEditService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Profile",
+    "ProfileEditService" =>  "\\EvolutionCMS\\EvoUser\\Services\\ProfileEdit",
     "ProfileEditCustomFields" => [ 'fullname' ],
     "ProfileEditCustomRules" => [
         'fullname' => 'required|min:4',
