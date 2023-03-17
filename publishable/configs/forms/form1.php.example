@@ -18,6 +18,10 @@ return [
         $data['attachments'] = [ 'assets/images/image1.jpg', 'assets/images/image2.jpg' ]; //массив файлов для прикрепления к письму
         return $data;
     },
+    "afterProcess" => function($data) {
+        //evo()->logEvent(1,1,print_r($data, 1), 'send form after process');
+        return $data;
+    },
     "customValidator" => function($data) {
         $errors = [];
         if (empty($data['name'])) {

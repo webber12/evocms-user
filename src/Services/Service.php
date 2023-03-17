@@ -132,6 +132,16 @@ class Service
         return $data;
     }
 
+    protected function callAfterProcess($data)
+    {
+        $classname = $this->getClassName();
+        $prepare = $this->getCfg($classname . 'AfterProcess', '');
+        if (!empty($prepare) && is_callable($prepare)) {
+            $data = call_user_func($prepare, $data);
+        }
+        return $data;
+    }
+
     protected function getClassName()
     {
         return substr(strrchr(get_called_class(), "\\"), 1);
