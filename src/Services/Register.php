@@ -43,6 +43,23 @@ class Register extends Service
                             ];
                             evo()->sendmail($params, '', []);
                         }
+                        if($this->getCfg("RegisterNotify", true) && !empty($data['email'])) {
+                            //уведомление о регистрации
+                            $subject = $this->getCfg("RegisterNotifySubject", '@CODE:' . evo()->getConfig('emailsubject'));
+                            $body = $this->getCfg("RegisterNotifyBody", '@CODE:' . evo()->getConfig('websignupemail_message'));
+                            $fields = [
+                                'uid' => $data['username'],
+                                'sname' => evo()->getConfig('site_name'),
+                                'pwd' => 'Не высылается в целях безопасности',
+                                'surl' => evo()->getConfig('site_url'),
+                            ];
+                            $params = [
+                                'to' => $data['email'],
+                                'subject' => app('DLTemplate')->parseChunk($subject, $fields),
+                                'body' => app('DLTemplate')->parseChunk($body, $fields),
+                            ];
+                            evo()->sendmail($params, '', []);
+                        }
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
