@@ -41,7 +41,7 @@ class SendForm extends Service
                 if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
                     $errors['common'][] = 'form sending error';
                 } else {
-                    $data = $this->callAfterProcess($data);
+                    $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
                 }
             }
         } else {
