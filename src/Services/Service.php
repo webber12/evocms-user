@@ -77,9 +77,24 @@ class Service
         return $value;
     }
 
-    protected function clean($str)
+    protected function clean($data)
     {
-        return e(trim($str));
+        $classname = $this->getClassName();
+        if($this->getCfg($classname . 'CleanData', true)) {
+            $clean_func = $this->getCfg($classname . 'CleanDataFunction', false);
+            if(empty($func) || !is_callable($func)) {
+                $clean_func = 'e';
+            }
+            if(is_array($data)) {
+                $data = array_map('trim', $data);
+                $output = array_map($clean_func, $data);
+            } else {
+                $output = call_user_func($clean_func, trim($data));
+            }
+        } else {
+            $output = $data;
+        }
+        return $output;
     }
 
     protected function injectAddFields($data = [])
