@@ -51,7 +51,7 @@ class OrderList extends Service
         $arr["to"] = evo()->getPlaceholder('list.to');
         $arr["current_page"] = evo()->getPlaceholder('list.current');
         $arr["last_page"] = evo()->getPlaceholder('list.totalPages');
-        $arr["per_page"] = $this->getCfg('OrderListDisplay', 2);
+        $arr["per_page"] = $this->getCfg('OrderListDisplay', 15);
         $arr["total"] = evo()->getPlaceholder('list.count');
 
         $arr['data'] = json_decode($list, true);
