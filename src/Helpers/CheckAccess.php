@@ -163,9 +163,7 @@ class CheckAccess
             case 'OrderRepeat':
                 $arr['id'] = $id;
                 $uid = evo()->db->getValue("select customer_id from " . evo()->getFullTableName("commerce_orders") . " where id=" . $id . " LIMIT 0,1");
-                if(!empty($uid)) {
-                    $arr['user'] = $uid;
-                }
+                $arr['user'] = $uid ?: 0;
                 break;
             case 'DocumentInfo':
                 $arr['id'] = $id;
