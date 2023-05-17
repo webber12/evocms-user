@@ -5,8 +5,6 @@ use EvolutionCMS\EvoUser\Services\Service;
 use \EvolutionCMS\UserManager\Services\UserManager;
 use Illuminate\Support\Facades\Validator;
 
-
-
 class ProfileEdit extends Service
 {
     public function process($params = [])
@@ -15,7 +13,7 @@ class ProfileEdit extends Service
 
         $uid = $params['user'] ?? 0;
 
-        if (request()->has(['fullname'])) {
+        if (request()->has(['fullname']) || request()->has(['edit_profile'])) {
 
             $data = $this->makeData();
 
@@ -36,16 +34,16 @@ class ProfileEdit extends Service
                         if(!empty($user['id'])) {
                             //сохраняем TV пользователя
                             $userTVs = (new UserManager())->saveValues($data, true, false);
-                            if (request()->has(['chpwd'])) {
-                                //пытаемся сменить пароль
-                                try {
-                                    $hash = (new UserManager())->changePassword($data);
-                                } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
-                                    $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
-                                    $errors['validation'] = $validateErrors;
-                                } catch (\EvolutionCMS\Exceptions\ServiceActionException $exception) {
-                                    $errors['common'][] = $exception->getMessage();
-                                }
+                        }
+                        if (request()->has(['chpwd'])) {
+                            //пытаемся сменить пароль
+                            try {
+                                $hash = (new UserManager())->changePassword($data);
+                            } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
+                                $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
+                                $errors['validation'] = $validateErrors;
+                            } catch (\EvolutionCMS\Exceptions\ServiceActionException $exception) {
+                                $errors['common'][] = $exception->getMessage();
                             }
                         }
                     }
@@ -74,13 +72,13 @@ class ProfileEdit extends Service
 
     protected function makeData()
     {
-        $fullname = $this->clean(request()->input("fullname"));
-        $data = ['fullname' => $fullname];
+        $data = [];
+        if(request()->has(['fullname'])) {
+            $fullname = $this->clean(request()->input("fullname"));
+            $data = [ 'fullname' => $fullname ];
+        }
         $data = $this->injectAddFields($data);
         return $data;
     }
 
-
 }
-
-
