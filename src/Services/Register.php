@@ -32,6 +32,11 @@ class Register extends Service
                         }
                         //сохраняем TV пользователя
                         $userTVs = (new UserManager())->saveValues(array_merge($data, [ 'id' => $user->id ]), true, false);
+                        //если нужно - авторизуем сразу после регистрации,
+                        //обязательно задаем 'RegisterRedirectId' либо делаем location.reload на событии register-success
+                        if($this->getCfg("RegisterUserAuth", false)) {
+                            $auth = (new UserManager())->loginById([ 'id' => $user->id ]);
+                        }
                         if(request()->has('sendEmail')) {
                             //необходимо сгенерировать пароль и выслать его на почту
                             $password = (new UserManager())->generateAndSavePassword([ 'id' => $user->id ]);
