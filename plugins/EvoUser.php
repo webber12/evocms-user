@@ -1,7 +1,7 @@
 <?php
 
 Event::listen('evolution.OnWebPageInit', function($params) {
-    evo()->regClientScript("assets/plugins/evocms-user/script.js");
+    evo()->regClientScript('<script type="text/javascript" defer src="assets/plugins/evocms-user/script.js"></script>');
     return serialize($params);
 });
 
