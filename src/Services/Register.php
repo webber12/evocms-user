@@ -91,16 +91,16 @@ class Register extends Service
 
     protected function makeData()
     {
-        $email = $this->clean(request()->input("email"));
+        $email = $this->clean(request()->input("email"), "email");
         //если пароль есть - берем его, если нет - задаем случайный (затем все равно сгенерируем случайный и отправим на email
-        $password = request()->has("password") ? $this->clean(request()->input("password")) : md5(microtime() . rand(100000, 1000000));
+        $password = request()->has("password") ? $this->clean(request()->input("password"), "password") : md5(microtime() . rand(100000, 1000000));
         if(request()->has(['username'])) {
-            $username = $this->clean(request()->input("username"));
+            $username = $this->clean(request()->input("username"), "username");
         } else {
             $username = $email;
         }
         if(request()->has(['password_confirmation'])) {
-            $password_confirmation = $this->clean(request()->input("password_confirmation"));
+            $password_confirmation = $this->clean(request()->input("password_confirmation"), "password_confirmation");
         } else {
             $password_confirmation = $password;
         }

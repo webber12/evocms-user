@@ -57,7 +57,7 @@ class DocumentCreate extends Service
         $data = [];
         foreach($_POST as $k => $v) {
             $k = e($k);
-            $v = is_string($v) ? $this->clean($v) : $this->clean(implode('||', $v));
+            $v = is_string($v) ? $this->clean($v, $k) : $this->clean(implode('||', $v), $k);
             $data[$k] = $v;
         }
         return $data;

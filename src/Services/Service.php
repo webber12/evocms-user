@@ -77,22 +77,22 @@ class Service
         return $value;
     }
 
-    protected function clean($data)
+    protected function clean($value, $key = false)
     {
         $classname = $this->getClassName();
         if($this->getCfg($classname . 'CleanData', true)) {
             $clean_func = $this->getCfg($classname . 'CleanDataFunction', false);
-            if(empty($func) || !is_callable($func)) {
+            if(empty($clean_func) || !is_callable($clean_func)) {
                 $clean_func = 'e';
             }
-            if(is_array($data)) {
-                $data = array_map('trim', $data);
-                $output = array_map($clean_func, $data);
+            if(is_array($value)) {
+                $value = array_map('trim', $value);
+                $output = array_map($clean_func, [ $value, $key ] );
             } else {
-                $output = call_user_func($clean_func, trim($data));
+                $output = call_user_func($clean_func, [ trim($value), $key ]);
             }
         } else {
-            $output = $data;
+            $output = $value;
         }
         return $output;
     }
@@ -104,7 +104,7 @@ class Service
         if(!empty($fields)) {
             foreach($fields as $field) {
                 if (request()->has([$field])) {
-                    $data[$field] = $this->clean(request()->input($field));
+                    $data[$field] = $this->clean(request()->input($field), $field);
                 }
             }
         }

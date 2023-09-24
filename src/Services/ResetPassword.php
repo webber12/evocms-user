@@ -99,13 +99,13 @@ class ResetPassword extends Service
     protected function makeData()
     {
         if (request()->has(['email'])) {
-            $email = $this->clean(request()->input("email"));
+            $email = $this->clean(request()->input("email"), "email");
             $data = ['email' => $email];
         }
         if (request()->has(['hash'])) {
             $fields = ['hash', 'password', 'password_confirmation'];
             foreach($fields as $field) {
-                $data[$field] = $this->clean(request()->input($field));
+                $data[$field] = $this->clean(request()->input($field), $field);
             }
         }
         return $data;

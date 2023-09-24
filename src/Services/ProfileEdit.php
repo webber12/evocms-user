@@ -74,7 +74,7 @@ class ProfileEdit extends Service
     {
         $data = [];
         if(request()->has(['fullname'])) {
-            $fullname = $this->clean(request()->input("fullname"));
+            $fullname = $this->clean(request()->input("fullname"), 'fullname');
             $data = [ 'fullname' => $fullname ];
         }
         $data = $this->injectAddFields($data);
