@@ -87,9 +87,9 @@ class Service
             }
             if(is_array($value)) {
                 $value = array_map('trim', $value);
-                $output = array_map($clean_func, [ $value, $key ] );
+                $output = array_map($clean_func, [ 0 => $value ], [ 0 => $key ] );
             } else {
-                $output = call_user_func($clean_func, [ trim($value), $key ]);
+                $output = call_user_func($clean_func, trim($value), $key);
             }
         } else {
             $output = $value;
