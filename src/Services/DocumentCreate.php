@@ -25,7 +25,7 @@ class DocumentCreate extends Service
             } else {
                 $defaults = $this->getCfg("DocumentCreateDefaults", []);
                 $data = array_merge($defaults, $data);
-                $data['createdby'] = $currentUser['id'];
+                $data['createdby'] = $currentUser['id'] ?? 0;
                 $data['createdon'] = date("U");
                 if(empty($data['template'])) {
                     $data['template'] = evo()->getConfig('default_template');

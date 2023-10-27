@@ -21,6 +21,9 @@ class CheckAccess
     {
         $flag = false;
         $rules = $this->getRules();
+        // если проверка отменена в правилах, просто возвращаем true
+        // и при необходимости разруливаем на уровне кастомной валидации
+        if(isset($rules['withoutRules']) && $rules['withoutRules'] === true) return true;
         $qParams = $this->getParamsFromQuery();
         if (!empty($rules)) {
             $user = $this->isLogged($rules);
