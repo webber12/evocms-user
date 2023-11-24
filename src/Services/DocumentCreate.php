@@ -33,6 +33,9 @@ class DocumentCreate extends Service
                 $data = $this->callPrepare($data);
                 try {
                     $document = (new DocumentManager())->create($data);
+                    if(empty($document->getKey())) {
+                        $errors['fail'][] = 'document create fail';
+                    }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
                     $errors['validation'] = $validateErrors;

@@ -65,6 +65,8 @@ class Register extends Service
                             ];
                             evo()->sendmail($params, '', []);
                         }
+                    } else {
+                        $errors['fail'][] = 'register fail';
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
