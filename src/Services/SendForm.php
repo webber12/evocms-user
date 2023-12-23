@@ -39,7 +39,7 @@ class SendForm extends Service
                     'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
                 ];
                 if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
-                    $errors['common'][] = 'form sending error';
+                    $errors['fail'][] = 'form sending error';
                 } else {
                     $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
                 }
