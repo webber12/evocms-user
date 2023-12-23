@@ -3,6 +3,7 @@
 namespace EvolutionCMS\EvoUser;
 
 use EvolutionCMS\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class EvoUserServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,8 @@ class EvoUserServiceProvider extends ServiceProvider
         $this->app->alias(EvoUser::class, 'evouser');
         app('router')->aliasMiddleware('evocms-user-csrf', \EvolutionCMS\EvoUser\Middlewares\EvoUserCSRF::class);
         app('router')->aliasMiddleware('evocms-user-access', \EvolutionCMS\EvoUser\Middlewares\EvoUserAccess::class);
+        $group = Route::middleware('web');
+        $group->group(__DIR__ . '/../routes.php');
     }
 
     /**
