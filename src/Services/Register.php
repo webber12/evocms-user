@@ -58,7 +58,7 @@ class Register extends Service
                             if(!empty($this->getCfg('RegisterVerifyUser', false))) {
                                 $verifiedKey = (new UserManager())->getVerifiedKey([ 'id' => $user->id ]);
                                 $verifyText = $this->getCfg("RegisterVerifyText", '@CODE:Для завершения процесса регистрация перейдите по указанной ссылке [+url+]');
-                                $verifyUrl = evo()->getConfig('site_url') . 'evocms-user/confirm/' . $user->id . '/' . $verifiedKey->verified_key;
+                                $verifyUrl = evo()->getConfig('site_url') . 'evocms-user/verify/' . $user->id . '/' . $verifiedKey->verified_key;
                                 $verifyText = app('DLTemplate')->parseChunk($verifyText, [ 'url' => $verifyUrl ]);
                                 $body .= '<br><br>' . $verifyText;
                             }
