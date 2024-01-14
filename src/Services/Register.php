@@ -21,6 +21,9 @@ class Register extends Service
                 $errors['customErrors'] = $customErrors;
             } else {
                 $data = $this->callPrepare($data);
+                if(!empty($this->getCfg('RegisterVerifyUser', false))) {
+                    $data['verified'] = 0;
+                }
                 try {
                     $user = (new UserManager())->create($data, true, false);
                     if(!empty($user->id) && !empty($data['role_id'])) {
@@ -52,6 +55,13 @@ class Register extends Service
                             //уведомление о регистрации
                             $subject = $this->getCfg("RegisterNotifySubject", '@CODE:' . evo()->getConfig('emailsubject'));
                             $body = $this->getCfg("RegisterNotifyBody", '@CODE:' . evo()->getConfig('websignupemail_message'));
+                            if(!empty($this->getCfg('RegisterVerifyUser', false))) {
+                                $verifiedKey = (new UserManager())->getVerifiedKey([ 'id' => $user->id ]);
+                                $verifyText = $this->getCfg("RegisterVerifyText", '@CODE:Для завершения процесса регистрация перейдите по указанной ссылке [+url+]');
+                                $verifyUrl = evo()->getConfig('site_url') . 'evocms-user/confirm/' . $user->id . '/' . $verifiedKey->verified_key;
+                                $verifyText = app('DLTemplate')->parseChunk($verifyText, [ 'url' => $verifyUrl ]);
+                                $body .= '<br><br>' . $verifyText;
+                            }
                             $fields = [
                                 'uid' => $data['username'],
                                 'sname' => evo()->getConfig('site_name'),
