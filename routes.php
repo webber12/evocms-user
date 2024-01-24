@@ -11,6 +11,11 @@ Route::post('/evocms-user/register', [Controller::class, 'Register'])
     ->middleware('evocms-user-csrf')
     ->name('evocms-user-register');
 
+Route::get('/evocms-user/verify/{user}/{key}', [Controller::class, 'Verify'])
+    ->where('user', '[0-9]+')
+    ->where('key', '[a-z0-9]{32}')
+    ->name('evocms-user-verify');
+	
 Route::post('/evocms-user/profile/{user}', [Controller::class, 'ProfileEdit'])
     ->where('user', '[0-9]+')
     ->middleware('evocms-user-csrf')
@@ -106,3 +111,7 @@ Route::post('/evocms-user/easynewsletter', [Controller::class, 'EasyNewsLetter']
 Route::post('/evocms-user/reset-password', [Controller::class, 'ResetPassword'])
     ->middleware('evocms-user-csrf')
     ->name('evocms-user-reset-password');
+
+Route::post('/evocms-user/verify-user', [Controller::class, 'VerifyUser'])
+    ->middleware('evocms-user-csrf')
+    ->name('evocms-user-verify-user');
