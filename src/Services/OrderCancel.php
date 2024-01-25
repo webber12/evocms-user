@@ -25,10 +25,10 @@ class OrderCancel extends Service
                 $comment = 'canceled by evocms-user ' . $currentUser['username'] . ' (' . $currentUser['id'] . ')';
                 $processor->addOrderHistory($order_id, $orderCancelStatus, $comment);
             }
-        } else if ($order['status_id'] == $orderCancelStatus ) {
+        } else if ($order['status_id'] == $orderCancelStatus) {
             $errors['common'][] = 'order is already canceled';
         } else {
-            $errors['common'][] = 'anavailable status to cancel';
+            $errors['common'][] = 'unavailable status to cancel';
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
@@ -38,5 +38,4 @@ class OrderCancel extends Service
 
         return $this->makeResponse($response);
     }
-
 }

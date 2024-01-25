@@ -5,10 +5,8 @@ use EvolutionCMS\EvoUser\Services\Service;
 use EvolutionCMS\Models\UserAttribute;
 use \EvolutionCMS\UserManager\Services\UserManager;
 
-
 class ResetPassword extends Service
 {
-
     public function process($params = [])
     {
         $errors = [];
@@ -32,7 +30,7 @@ class ResetPassword extends Service
             $uid = $this->checkUser($data);
 
             if(!$uid) {
-                $customErrors = ['email' => 'no user'];
+                $customErrors = ['email' => ['no user']];
             }
 
             if (!empty($customErrors)) {
@@ -46,7 +44,6 @@ class ResetPassword extends Service
                     if(!evo()->sendmail($sendmailParams, '', ($_FILES ?? []))) {
                         $errors['common'][] = 'form sending error';
                     }
-
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
                     $errors['validation'] = $validateErrors;
@@ -68,7 +65,6 @@ class ResetPassword extends Service
     protected function makeChangePasswordResponse()
     {
         if (request()->has(['hash', 'password', 'password_confirmation'])) {
-
             $data = $this->makeData();
 
             $customErrors = $this->makeCustomValidator($data);
@@ -134,7 +130,5 @@ class ResetPassword extends Service
             'subject' =>  $this->getCfg('ResetPasswordSubject', 'Данные для восстановления пароля'),
             'body' => $this->getCfg('ResetPasswordText', 'Для восстановления пароля перейдите по ссылке ') . ' ' . $url,
         ];
-
     }
-
 }
