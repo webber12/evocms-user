@@ -14,7 +14,6 @@ class ProfileEdit extends Service
         $uid = $params['user'] ?? 0;
 
         if (request()->has(['fullname']) || request()->has(['edit_profile'])) {
-
             $data = $this->makeData();
 
             $data['id'] = $uid;
@@ -69,7 +68,6 @@ class ProfileEdit extends Service
         return $this->makeResponse($response);
     }
 
-
     protected function makeData()
     {
         $data = [];
@@ -80,5 +78,4 @@ class ProfileEdit extends Service
         $data = $this->injectAddFields($data);
         return $data;
     }
-
 }

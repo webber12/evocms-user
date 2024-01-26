@@ -37,6 +37,7 @@ var EvoCmsUser = {
                 beforeSend: function () {
                     form.css({'opacity':'.5'});
                     form.find('[data-error]').html('');
+
                     $(document).trigger("evocms-user-" + action + "-before", [ actionUser, actionId, form ]);
                 },
                 success: function (msg) {
@@ -47,18 +48,23 @@ var EvoCmsUser = {
                         let fieldErrors = errors.validation || {};
                         let customErrors = errors.customErrors || {};
                         let commonErrors = errors.common || [];
-                        for(k in customErrors) {
-                            //console.log(k + ' ' + customErrors[k]);
-                            form.find('[data-error-' + k + ']').html(customErrors[k]);
-                        }
+
                         for(k in fieldErrors) {
                             //console.log(k + ' ' + fieldErrors[k]);
-                            form.find('[data-error-' + k + ']').html(fieldErrors[k]);
+                            form.find('[data-error-' + k + ']').html(fieldErrors[k].join('<br />'));
                         }
-                        form.find('[data-error-common]').html(commonErrors.join("<br>"));
+
+                        for(k in customErrors) {
+                            //console.log(k + ' ' + customErrors[k]);
+                            form.find('[data-error-' + k + ']').html(customErrors[k].join('<br />'));
+                        }
+
+                        form.find('[data-error-common]').html(commonErrors.join("<br />"));
+
                         $(document).trigger("evocms-user-" + action + "-error", [ actionUser, actionId, form, msg ]);
                     } else {
                         $(document).trigger("evocms-user-" + action + "-success", [ actionUser, actionId, form, msg ]);
+
                         let redirect = msg.redirect || '';
                         if(redirect != '') {
                             location.href = redirect;
