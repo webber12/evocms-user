@@ -51,15 +51,15 @@ var EvoCmsUser = {
 
                         for(k in fieldErrors) {
                             //console.log(k + ' ' + fieldErrors[k]);
-                            form.find('[data-error-' + k + ']').html(fieldErrors[k].join('<br />'));
+                            form.find('[data-error-' + k + ']').html(self.makeString(fieldErrors[k]));
                         }
 
                         for(k in customErrors) {
                             //console.log(k + ' ' + customErrors[k]);
-                            form.find('[data-error-' + k + ']').html(customErrors[k].join('<br />'));
+                            form.find('[data-error-' + k + ']').html(self.makeString(customErrors[k]));
                         }
 
-                        form.find('[data-error-common]').html(commonErrors.join("<br />"));
+                        form.find('[data-error-common]').html(self.makeString(commonErrors));
 
                         $(document).trigger("evocms-user-" + action + "-error", [ actionUser, actionId, form, msg ]);
                     } else {
@@ -73,6 +73,13 @@ var EvoCmsUser = {
                 }
             })
         })
+    },
+    makeString: function(value, sep = "<br />") {
+        if (typeof value === 'string' || value instanceof String) {
+            return value;
+        } else {
+            return value.join(sep);
+        }
     }
 }
 $(document).ready(function(){
