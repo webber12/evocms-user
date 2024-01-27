@@ -4,7 +4,6 @@ namespace EvolutionCMS\EvoUser\Services;
 use EvolutionCMS\EvoUser\Services\Service;
 use \EvolutionCMS\UserManager\Services\UserManager;
 
-
 class Auth extends Service
 {
 
@@ -13,9 +12,7 @@ class Auth extends Service
         $errors = [];
 
         if (request()->has(['username', 'password'])) {
-
             $data = $this->makeData();
-
             $customErrors = $this->makeCustomValidator($data);
 
             if (!empty($customErrors)) {
@@ -32,20 +29,19 @@ class Auth extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = trans('evocms-user-core::messages.common_required_fields');
         }
         if (!empty($errors)) {
-            $response = [ 'status' => 'error', 'errors' => $errors ];
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success auth' ];
+            $response = ['status' => 'ok', 'message' => trans('evocms-user-core::messages.message_success_auth')];
             $redirectId = $this->getCfg('AuthRedirectId');
-            if(!empty($redirectId) && is_numeric($redirectId)) {
+            if (!empty($redirectId) && is_numeric($redirectId)) {
                 $response['redirect'] = evo()->makeUrl($redirectId);
             }
         }
         return $this->makeResponse($response);
     }
-
 
     protected function makeData()
     {
@@ -54,5 +50,4 @@ class Auth extends Service
         $data = ['username' => $username, 'password' => $password];
         return $data;
     }
-
 }

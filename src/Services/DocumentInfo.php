@@ -8,9 +8,12 @@ class DocumentInfo extends Service
 {
     public function process($params = [])
     {
+        $errors = [];
         $check = $this->checkDocument($params);
+
         if (!$check) {
-            $response = ['error' => 'access denied'];
+            $errors['common'][] = trans('evocms-user-core::messages.common_access_denied');
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
             $response = evo()->getDocumentObject('id', $params['id']);
         }

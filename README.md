@@ -1,27 +1,26 @@
-#### Установка:
+### Установка:
+
 добавить в секцию require файла core/custom/composer.json строку
 
-```"webber12/evocms-user": "*"```
+`"webber12/evocms-user": "*"`
 
- и выполнить в папке core команду (чтобы обновить только указанный пакет)
- 
-```composer update webber12/evocms-user```
+и выполнить в папке core команду (чтобы обновить только указанный пакет)
+
+`composer update webber12/evocms-user`
 
 затем в этой же папке выполнить (если пакет ранее не устанавливался)
 
-```php artisan vendor:publish --provider="EvolutionCMS\EvoUser\EvoUserServiceProvider"```
+`php artisan vendor:publish --provider="EvolutionCMS\EvoUser\EvoUserServiceProvider"`
 
-
-#### Некоторые примеры использования в контроллере:
+### Некоторые примеры использования в контроллере:
 
 Получение id текущего авторизованного пользователя в порядке следования контекстов (возвращается первый найденный)
 
-```$currentUser = app('evouser')->do('user', ['web', 'mgr']);```
+`$currentUser = app('evouser')->do('user', ['web', 'mgr']);`
 
 Данные профиля заданного пользователя
 
-```$profile = app('evouser')->do('ProfileInfo', [ 'user' => $currentUser ]);```
-
+`$profile = app('evouser')->do('ProfileInfo', [ 'user' => $currentUser ]);`
 
 По умолчанию при вызове сервиса проверяются права доступа, заданные в конфигурации, но данную проверку можно отключить
 Получение списка документов пользователя с id=7 без проверки прав доступа
@@ -30,8 +29,8 @@
 $documents = app('evouser')->withoutRules()->do('DocumentListUser', [ 'user' => 7 ]);
 ```
 
-
 Список произвольных опубликованных документов с шаблоном 3, словом "товар" в заголовке и price>=20 (tv) - постранично
+
 ```
 $documents = app('evouser')->do('DocumentList', [], [
     'fields' => 'id,pagetitle',
@@ -47,6 +46,7 @@ $documents = app('evouser')->do('DocumentList', [], [
 ```
 
 Список документов, созданных текущим пользователем (с фильтром и постраничным выводом)
+
 ```
 $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser ], [
     'fields' => 'id,pagetitle',
@@ -62,17 +62,18 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 
 Получение объекта $documentObject документа с id=2
 
-```$document = app('evouser')->do('DocumentObject', [ 'id' => 2 ]);```
+`$document = app('evouser')->do('DocumentObject', [ 'id' => 2 ]);`
 
 Получение списка заказов текущего пользователя
 
-```$orders = app('evouser')->do('OrderList', [ 'user' => $currentUser ]);```
+`$orders = app('evouser')->do('OrderList', [ 'user' => $currentUser ]);`
 
 Получение информации о заказе с id=4 (данные о заказе, списке товаров и истории
 
-```$order = app('evouser')->do('OrderInfo', [ 'id' => 4 ]);```
+`$order = app('evouser')->do('OrderInfo', [ 'id' => 4 ]);`
 
 #### Пример формы авторизации
+
 ```
 <form data-evocms-user-action="auth">
     <p><b>ВХОД</b></p>
@@ -87,6 +88,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример формы редактирования профиля текущего пользователя
+
 ```
     Вы вошли как <b><a href="?logout">{{ $user['username'] }}</a></b>
     <hr><hr>
@@ -101,17 +103,18 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
         <input type="submit" value="ok">
     </form>
 ```
+
 Поле fullname - обязательное при редактировании профиля. Важно!! Массив всех полей, доступных для редактирования указывается в конфигурации в правиле ProfileEditCustomFields.
 
 #### Изменение пароля
 
-Изменение пароля - частный случай редактирования профиля, поэтому все условия, описанные для редактирования профиля, должны быть соблюдены 
+Изменение пароля - частный случай редактирования профиля, поэтому все условия, описанные для редактирования профиля, должны быть соблюдены
 (обязательное поле fullname и перечисление всех полей в массиве ProfileEditCustomFields)
 
 Перечень полей - old_password, password, password_confirmation и chpwd=1 для передачи информации о том, что требуется редактирование пароля.
 
-
 #### Пример формы создания документа c TV image
+
 ```
 <form data-evocms-user-action="document">
     <p><b>СОЗДАНИЕ ДОКУМЕНТА</b></p>
@@ -128,6 +131,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример редактирования документа с id=7
+
 ```
 <form data-evocms-user-action="document" data-evocms-user-id="7">
     <p><b>РЕДАКТИРОВАНИЕ ДОКУМЕНТА</b></p>
@@ -144,6 +148,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример формы для повторения заказа с id=2 (добавление в корзину товаров этого заказа)
+
 ```
 <form data-evocms-user-action="order/repeat" data-evocms-user-id="2">
     <p><b>Повторение заказа номер 2 выглядит так</b></p>
@@ -154,6 +159,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример jQuery-скрипта перегрузки страницы после успешной авторизации
+
 ```
     $(document).on("evocms-user-auth-success", function(e, actionUser, actionId, element, msg){
         location.reload();
@@ -161,6 +167,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример jQuery-скрипта для обработки редактирования профиля
+
 ```
     $(document).on("evocms-user-profile-before", function(e, actionUser, actionId, element){
         alert('сейчас отправим данные пользователя ' + actionUser + ' на редактирование и подождем, что будет');
@@ -175,6 +182,7 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример формы для добавления email в модуль рассылки EasyNewsLetter
+
 ```
 <form data-evocms-user-action="easynewsletter">
     @csrf
@@ -185,9 +193,9 @@ $documentsUser = app('evouser')->do('DocumentListUser', [ 'user' => $currentUser
 ```
 
 #### Пример скрипта для оповещения об успешной подписке EasyNewsLetter
+
 ```
     $(document).on("evocms-user-easynewsletter-success", function(e, actionUser, actionId, element, msg){
         element.find('[data-error-common]').html('<span class="success">Вы успешно подписались на рассылку!</span>');
     })
 ```
-

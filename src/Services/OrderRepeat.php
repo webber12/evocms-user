@@ -8,13 +8,11 @@ class OrderRepeat extends Service
 {
     public function process($params = [])
     {
-        $order_id = $params['id'] ?? 0;
-
         $errors = [];
-
+        $order_id = $params['id'] ?? 0;
         $currentUser = $this->getUser();
 
-        evo()->invokeEvent('OnWebPageInit');//для инициализации commerce
+        evo()->invokeEvent('OnWebPageInit'); //для инициализации commerce
 
         $processor = ci()->commerce->loadProcessor();
         $order = $processor->loadOrder($order_id, true);
@@ -23,9 +21,9 @@ class OrderRepeat extends Service
             ->active()->get()->pluck('id')->toArray();
 
         $add = [];
-        foreach($items as $item) {
+        foreach ($items as $item) {
             //можно добавить только активные (неудаленные опубликованные) товары
-            if(in_array($item['id'], $active)) {
+            if (in_array($item['id'], $active)) {
                 $add[] = [
                     'id' => $item['id'],
                     'count' => $item['count'],
@@ -35,20 +33,19 @@ class OrderRepeat extends Service
                 ];
             }
         }
-        if(!empty($add)) {
+        if (!empty($add)) {
             $cartName = $this->getCfg("OrderRepeatCartName", 'products');
             $cart = ci()->carts->getCart($cartName);
             $response = $cart->addMultiple($add);
         } else {
-            $errors['common'][] = 'empty order';
+            $errors['common'][] = trans('evocms-user-core::messages.common_order_empty');
         }
 
         if (!empty($errors)) {
-            $response = [ 'status' => 'error', 'errors' => $errors ];
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = [ 'status' => 'ok', 'message' => $response ];
+            $response = ['status' => 'ok', 'message' => $response];
         }
-
 
         return $this->makeResponse($response);
     }

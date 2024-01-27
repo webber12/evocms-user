@@ -2,30 +2,21 @@
 namespace EvolutionCMS\EvoUser\Services;
 
 use EvolutionCMS\EvoUser\Services\Service;
-use \EvolutionCMS\UserManager\Services\UserManager;
-
 
 class SendForm extends Service
 {
-
     //custom config for formid from file
     protected $customConfig = [];
-
     protected $formId = false;
 
     public function process($params = [])
     {
-
         $errors = [];
 
         if (request()->has(['formid'])) {
-
             $this->formId = e(request()->input('formid'));
-
             $this->loadCustomConfig('forms/' . $this->formId . '.php');
-
             $data = $this->makeData();
-
             $customErrors = $this->makeCustomValidator($data);
 
             if (!empty($customErrors)) {
@@ -38,32 +29,32 @@ class SendForm extends Service
                     'subject' => !empty($data['subject']) ? $data['subject'] : $this->getCfg("SendFormSubject", "Letter form site"),
                     'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
                 ];
-                if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
-                    $errors['fail'][] = 'form sending error';
+                if (!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
+                    $errors['fail'][] = trans('evocms-user-core::messages.fail_form_send');
                 } else {
-                    $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
+                    $data = $this->callAfterProcess(array_merge($data, ['sender_params' => $params]));
                 }
             }
         } else {
-            $errors['common'][] = 'no required formid field';
+            $errors['common'][] = trans('evocms-user-core::messages.common_required_field', ['field' => 'formid']);
         }
         if (!empty($errors)) {
-            $response = [ 'status' => 'error', 'errors' => $errors ];
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success form send' ];
+            $response = ['status' => 'ok', 'message' => trans('evocms-user-core::messages.message_form_sent')];
         }
+
         return $this->makeResponse($response);
     }
 
     protected function makeData()
     {
         $data = [];
-        foreach($_POST as $k => $v) {
+        foreach ($_POST as $k => $v) {
             $k = e($k);
             $v = is_string($v) ? $this->clean($v, $k) : $this->clean(implode('||', $v), $k);
             $data[$k] = $v;
         }
         return $data;
     }
-
 }
