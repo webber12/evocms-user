@@ -27,11 +27,11 @@ return [
     'fail_profile_create' => 'Ошибка создания профиля.', // register fail
     'fail_profile_verify' => 'Ошибка подтверждения профиля.', // verify fail
     'fail_form_send' => 'Ошибка отправки формы.', // form sending error
-    'fail_resource_create' => 'Ошибка создания документа.', // document create fail
+    'fail_resource_create' => 'Ошибка создания ресурса.', // document create fail
 
     'validate_minlength' => 'минимальная длина поля :field :num знаков',
     'validate_valid_email' => 'Заполните :field адресом электронной почты.',
 
     'text_cart_name' => 'товары',
-    'text_new_document' => 'Новый документ',
+    'text_new_document' => 'Новый ресурс',
 ];
