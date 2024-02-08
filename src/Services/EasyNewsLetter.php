@@ -26,17 +26,17 @@ class EasyNewsLetter extends Service
                 //тут будем сохранять
                 $id = DB::table('easynewsletter_subscribers')->insertGetId($data);
                 if(!$id) {
-                    $errors['common'][] = 'server error. try again letter';
+                    $errors['fail'][] = $this->trans('common_server_error');
                 }
             }
 
         } else {
-            $errors['common'][] = trans('evocms-user-core::messages.required_field', [ 'field' => 'Email' ]);
+            $errors['common'][] = $this->trans('common_required_field', [ 'field' => 'Email' ]);
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success form send' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_form_sent') ];
         }
         return $this->makeResponse($response);
     }

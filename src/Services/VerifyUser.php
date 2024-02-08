@@ -48,7 +48,7 @@ class VerifyUser extends Service
                             evo()->sendmail($params, '', []);
                         }
                     } else {
-                        $errors['fail'][] = 'verify fail';
+                        $errors['fail'][] = $this->trans('fail_profile_verify');
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
@@ -58,12 +58,12 @@ class VerifyUser extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            // $response = [ 'status' => 'ok', 'message' => 'success verify' ];
+            // $response = [ 'status' => 'ok', 'message' => $this->trans('message_profile_verified') ];
         }
         return $this->makeResponse($response);
     }

@@ -42,7 +42,7 @@ class ResetPassword extends Service
                     $sendmailParams = $this->makeSendmailParams($data, $hash);
 
                     if(!evo()->sendmail($sendmailParams, '', ($_FILES ?? []))) {
-                        $errors['common'][] = 'form sending error';
+                        $errors['fail'][] = $this->trans('common_form_sending_error');
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
@@ -52,12 +52,12 @@ class ResetPassword extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => '', 'step' => 1 ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_profile_remind1'), 'step' => 1 ];
         }
         return $response;
     }
@@ -82,12 +82,12 @@ class ResetPassword extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = ['status' => 'ok', 'message' => '', 'step' => 2];
+            $response = ['status' => 'ok', 'message' => $this->trans('message_profile_remind1'), 'step' => 2];
         }
         return $response;
     }
@@ -127,8 +127,8 @@ class ResetPassword extends Service
 
         return [
             'to' => trim($data['email']),
-            'subject' =>  $this->getCfg('ResetPasswordSubject', 'Данные для восстановления пароля'),
-            'body' => $this->getCfg('ResetPasswordText', 'Для восстановления пароля перейдите по ссылке ') . ' ' . $url,
+            'subject' =>  $this->getCfg('ResetPasswordSubject', $this->trans('message_profile_remind_email_subj')),
+            'body' => $this->getCfg('ResetPasswordText', $this->trans('message_profile_remind_email_text')) . ' ' . $url,
         ];
     }
 }

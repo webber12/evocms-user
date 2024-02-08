@@ -8,8 +8,8 @@ return [
         'username' => 'required|min:5',
     ],
     "AuthCustomMessages" => [
-        'username.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Username' ]),
-        'username.min' =>  trans('evocms-user-core::messages.minlength', [ 'field' => 'Username', 'num' => 5 ]),
+        'username.required' => trans('evocms-user-core::messages.common_required_field', ['field' => 'Username']),
+        'username.min' => trans('evocms-user-core::messages.validate_minlength', ['field' => 'Username', 'num' => 5]),
     ],
     "AuthPrepare" => "classname::methodname",
 
@@ -18,7 +18,7 @@ return [
     "RegisterCustomFields" => [ 'first_name', 'fullname' ],
     "RegisterCustomRules" => [
         'fullname' => 'required|min:6',
-        'first_name' => 'required|min:6'
+        'first_name' => 'required|min:6',
     ],
     "RegisterCustomMessages" => [
         'fullname.min' => trans('evocms-user-core::messages.test'),
@@ -45,7 +45,7 @@ return [
 
     ],
 
-    "DocumentListService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentList",
+    "DocumentListService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentList",
     "DocumentListDisplay" => 10,
     "DocumentListSortBy" => "id",
     "DocumentListSortDir" => "DESC",
@@ -54,8 +54,8 @@ return [
     "DocumentListOnlyActive" => false,
     "DocumentListShowUndeleted" => true,
 
-    "DocumentListUserService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
-    "DocumentListUserService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
+    "DocumentListUserService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
+    "DocumentListUserService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentListUser",
     "DocumentListUserDisplay" => 15,
     "DocumentListUserSortBy" => "id",
     "DocumentListUserSortDir" => "DESC",
@@ -64,15 +64,15 @@ return [
     "DocumentListUserOnlyActive" => false,
     "DocumentListUserShowUndeleted" => true,
 
-    "DocumentInfoService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentInfo",
+    "DocumentInfoService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentInfo",
 
-    "DocumentObjectService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentObject",
+    "DocumentObjectService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentObject",
     "DocumentObjectOnlyActive" => false,
     "DocumentObjectShowUndeleted" => true,
 
-    "DocumentCreateService" =>  "\\EvolutionCMS\\EvoUser\\Services\\DocumentCreate",
+    "DocumentCreateService" => "\\EvolutionCMS\\EvoUser\\Services\\DocumentCreate",
     "DocumentCreateDefaults" => [
-        'pagetitle' => trans('evocms-user-core::messages.new_document'),
+        'pagetitle' => trans('evocms-user-core::messages.text_new_document'),
         'template' => 0,
         'parent' => 0,
         'published' => 0,
@@ -82,16 +82,16 @@ return [
         'pagetitle' => 'required|min:6',
     ],
     "DocumentCreateCustomMessages" => [
-        'pagetitle.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Pagetitle' ]),
-        'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
+        'pagetitle.required' => trans('evocms-user-core::messages.common_required_field', ['field' => 'Pagetitle']),
+        'pagetitle.min' => trans('evocms-user-core::messages.validate_minlength', ['num' => 6, 'field' => 'Pagetitle']),
     ],
 
     "DocumentEditCustomRules" => [
         'pagetitle' => 'required|min:6',
     ],
     "DocumentEditCustomMessages" => [
-        'pagetitle.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Pagetitle' ]),
-        'pagetitle.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Pagetitle' ]),
+        'pagetitle.required' => trans('evocms-user-core::messages.common_required_field', ['field' => 'Pagetitle']),
+        'pagetitle.min' => trans('evocms-user-core::messages.validate_minlength', ['num' => 6, 'field' => 'Pagetitle']),
     ],
 
     "SendFormAuthAccessRules" => [
@@ -107,6 +107,6 @@ return [
     "OrderCancelStatus" => 5,
     "OrderCancelAvailableStatuses" => [ 1, 2 ], //отменить можно только новый заказ и заказ в обработке
 
-    "OrderRepeatCartName" => trans('evocms-user-core::messages.cart_name'),
+    "OrderRepeatCartName" => trans('evocms-user-core::messages.text_cart_name'),
 
 ];

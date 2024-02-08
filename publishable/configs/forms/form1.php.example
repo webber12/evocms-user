@@ -9,9 +9,9 @@ return [
         'email' => 'email',
     ],
     "customMessages" => [
-        'name.required' =>  trans('evocms-user-core::messages.required_field', [ 'field' => 'Name' ]),
-        'name.min' => trans('evocms-user-core::messages.minlength', [ 'num' => 6, 'field' => 'Name' ]),
-        'email.email' => trans('evocms-user-core::messages.valid_email', ['field' => 'Email' ]),
+        'name.required' =>  trans('evocms-user-core::messages.common_required_field', [ 'field' => 'Name' ]),
+        'name.min' => trans('evocms-user-core::messages.validate_minlength', [ 'num' => 6, 'field' => 'Name' ]),
+        'email.email' => trans('evocms-user-core::messages.validate_valid_email', ['field' => 'Email' ]),
     ],
     "prepare" => function($data) {
         $data['name'] .= ' - prepared ';
@@ -25,10 +25,10 @@ return [
     "customValidator" => function($data) {
         $errors = [];
         if (empty($data['name'])) {
-            $errors['name'] = trans('evocms-user-core::messages.required_field', [ 'field' => 'Name' ]);
+            $errors['name'] = trans('evocms-user-core::messages.common_required_field', [ 'field' => 'Name' ]);
         }
         if (empty($data['email'])) {
-            $errors['email'] = trans('evocms-user-core::messages.required_field', [ 'field' => 'Email' ]);
+            $errors['email'] = trans('evocms-user-core::messages.common_required_field', [ 'field' => 'Email' ]);
         }
         return $errors;
     },

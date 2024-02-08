@@ -40,7 +40,7 @@ class OrderRepeat extends Service
             $cart = ci()->carts->getCart($cartName);
             $response = $cart->addMultiple($add);
         } else {
-            $errors['common'][] = 'empty order';
+            $errors['common'][] = $this->trans('common_order_empty');
         }
 
         if (!empty($errors)) {

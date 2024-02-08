@@ -76,7 +76,7 @@ class Register extends Service
                             evo()->sendmail($params, '', []);
                         }
                     } else {
-                        $errors['fail'][] = 'register fail';
+                        $errors['fail'][] = $this->trans('fail_profile_create');
                     }
                 } catch (\EvolutionCMS\Exceptions\ServiceValidationException $exception) {
                     $validateErrors = $exception->getValidationErrors(); //Получаем все ошибки валидации
@@ -86,12 +86,12 @@ class Register extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success reg' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_profile_created') ];
             $redirectId = $this->getCfg('RegisterRedirectId');
             if(!empty($redirectId) && is_numeric($redirectId)) {
                 $response['redirect'] = evo()->makeUrl($redirectId);

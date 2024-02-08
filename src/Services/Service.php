@@ -209,11 +209,11 @@ class Service
         return;
     }
 
-    protected function trans($str, $key = 'messages')
+    protected function trans($str, $fields = [], $key = 'messages')
     {
         return trans()->has('evocms-user-custom::' . $key . '.' . $str)
-            ? trans('evocms-user-custom::' . $key . '.' . $str)
-            : trans('evocms-user-core::' . $key . '.' . $str);
+            ? trans('evocms-user-custom::' . $key . '.' . $str, $fields)
+            : trans('evocms-user-core::' . $key . '.' . $str, $fields);
     }
 
 }

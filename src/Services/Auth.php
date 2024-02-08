@@ -37,7 +37,7 @@ class Auth extends Service
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success auth' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_success_auth') ];
             $redirectId = $this->getCfg('AuthRedirectId');
             if(!empty($redirectId) && is_numeric($redirectId)) {
                 $response['redirect'] = evo()->makeUrl($redirectId);

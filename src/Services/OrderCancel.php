@@ -26,14 +26,14 @@ class OrderCancel extends Service
                 $processor->addOrderHistory($order_id, $orderCancelStatus, $comment);
             }
         } else if ($order['status_id'] == $orderCancelStatus) {
-            $errors['common'][] = 'order is already canceled';
+            $errors['common'][] = $this->trans('common_order_cancelled_already');
         } else {
-            $errors['common'][] = 'unavailable status to cancel';
+            $errors['common'][] = $this->trans('common_order_status_na');
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success order canceled' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_order_cancelled') ];
         }
 
         return $this->makeResponse($response);

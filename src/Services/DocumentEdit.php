@@ -41,12 +41,12 @@ class DocumentEdit extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = ['status' => 'ok', 'message' => 'success document edit'];
+            $response = ['status' => 'ok', 'message' => $this->trans('message_resource_edited')];
         }
         return $this->makeResponse($response);
     }

@@ -39,18 +39,18 @@ class SendForm extends Service
                     'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
                 ];
                 if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
-                    $errors['fail'][] = 'form sending error';
+                    $errors['fail'][] = $this->trans('fail_form_send');
                 } else {
                     $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
                 }
             }
         } else {
-            $errors['common'][] = 'no required formid field';
+            $errors['common'][] = $this->trans('common_required_field', ['field' => 'formid']);
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success form send' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_form_sent') ];
         }
         return $this->makeResponse($response);
     }

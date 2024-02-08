@@ -54,12 +54,12 @@ class ProfileEdit extends Service
                 }
             }
         } else {
-            $errors['common'][] = 'no required fields';
+            $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => 'success edit' ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_profile_edited') ];
             $redirectId = $this->getCfg('ProfileEditRedirectId');
             if(!empty($redirectId) && is_numeric($redirectId)) {
                 $response['redirect'] = evo()->makeUrl($redirectId);

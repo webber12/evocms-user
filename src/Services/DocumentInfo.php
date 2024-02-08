@@ -10,7 +10,7 @@ class DocumentInfo extends Service
     {
         $check = $this->checkDocument($params);
         if (!$check) {
-            $response = ['error' => 'access denied'];
+            $response = ['error' => $this->trans('common_access_denied')];
         } else {
             $response = evo()->getDocumentObject('id', $params['id']);
         }
