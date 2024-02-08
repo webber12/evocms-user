@@ -30,7 +30,7 @@ class ResetPassword extends Service
             $uid = $this->checkUser($data);
 
             if(!$uid) {
-                $customErrors = ['email' => ['no user']];
+                $customErrors = ['email' => [ $this->trans('custom_user_na') ]];
             }
 
             if (!empty($customErrors)) {
