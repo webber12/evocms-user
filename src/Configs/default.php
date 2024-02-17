@@ -1,9 +1,12 @@
 <?php
 
 return [
+    // default
+    "FrontJS" => 'assets/plugins/evocms-user/script.js',
+
     //"LogoutRedirectId" => 1,
     //"AuthRedirectId" => 1,
-    "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Auth",
+    "AuthService" => "\\EvolutionCMS\\EvoUser\\Services\\Auth",
     "AuthCustomRules" => [
         'username' => 'required|min:5',
     ],
@@ -14,8 +17,8 @@ return [
     "AuthPrepare" => "classname::methodname",
 
     //"RegisterRedirectId" => 1,
-    "RegisterService" =>  "\\EvolutionCMS\\EvoUser\\Services\\Register",
-    "RegisterCustomFields" => [ 'first_name', 'fullname' ],
+    "RegisterService" => "\\EvolutionCMS\\EvoUser\\Services\\Register",
+    "RegisterCustomFields" => ['first_name', 'fullname'],
     "RegisterCustomRules" => [
         'fullname' => 'required|min:6',
         'first_name' => 'required|min:6',
@@ -24,10 +27,10 @@ return [
         'fullname.min' => trans('evocms-user-core::messages.test'),
         'first_name.min' => 'имя не короче 6 знаков',
     ],
-    "RegisterPrepare" => function($data){unset($data['role_id']);unset($data['user_groups']);return $data;},
+    "RegisterPrepare" => function ($data) {unset($data['role_id']);unset($data['user_groups']);return $data;},
 
-    "ProfileEditService" =>  "\\EvolutionCMS\\EvoUser\\Services\\ProfileEdit",
-    "ProfileEditCustomFields" => [ 'fullname' ],
+    "ProfileEditService" => "\\EvolutionCMS\\EvoUser\\Services\\ProfileEdit",
+    "ProfileEditCustomFields" => ['fullname'],
     "ProfileEditCustomRules" => [
         'fullname' => 'required|min:4',
     ],
@@ -38,7 +41,7 @@ return [
     "CommonAccessRules" => [
         'context' => 'web',
         'current' => true,
-        'roles' => [ 1 ],
+        'roles' => [1],
         'custom' => "classname::methodname",
     ],
     "ProfileInfoAccessRules" => [
@@ -95,18 +98,17 @@ return [
     ],
 
     "SendFormAuthAccessRules" => [
-        'roles' => [ 2 ],
+        'roles' => [2],
         'custom' => "classname::methodname",
     ],
 /*
-    "OrderListPrepare" => function($data, $modx, $DL, $eDL) use ($fields, &$index) {
-        //$data['custom_field'] = 'custom_field_from_prepare';
-        return $data;
-    },
-*/
+"OrderListPrepare" => function($data, $modx, $DL, $eDL) use ($fields, &$index) {
+//$data['custom_field'] = 'custom_field_from_prepare';
+return $data;
+},
+ */
     "OrderCancelStatus" => 5,
-    "OrderCancelAvailableStatuses" => [ 1, 2 ], //отменить можно только новый заказ и заказ в обработке
+    "OrderCancelAvailableStatuses" => [1, 2], //отменить можно только новый заказ и заказ в обработке
 
     "OrderRepeatCartName" => trans('evocms-user-core::messages.text_cart_name'),
-
 ];
