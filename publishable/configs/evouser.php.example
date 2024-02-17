@@ -3,6 +3,11 @@
 //который возвращаем массив кастомных параметров пакета
 
 return [
+    // default
+    // "FrontJS" => 'assets/plugins/evocms-user/script.js',
+    // custom
+    // "FrontJS" => 'assets/plugins/evocms-user/script-vanilla.js',
+
     /* показ списка заказов разруливается только ролями
     "OrderListAccessRules" => [
         'roles' => [ 1, 2 ]
