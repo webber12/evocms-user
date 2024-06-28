@@ -101,6 +101,16 @@ class Controller
     {
         return $this->loadService(__FUNCTION__)->process();
     }
+    
+    public function Verify($user, $key)
+    {
+        return $this->loadService(__FUNCTION__)->process(['user' => $user, 'key' => $key]);
+    }
+    
+    public function VerifyUser()
+    {
+        return $this->loadService(__FUNCTION__)->process();
+    }
 
     public function getConfig($reload = false)
     {
