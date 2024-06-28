@@ -38,8 +38,12 @@ class SendForm extends Service
                     'subject' => !empty($data['subject']) ? $data['subject'] : $this->getCfg("SendFormSubject", "Letter form site"),
                     'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
                 ];
-                if(!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
-                    $errors['fail'][] = $this->trans('fail_form_send');
+                if(empty($data['preventSend'])) {
+                    if (!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
+                        $errors['fail'][] = $this->trans('fail_form_send');
+                    } else {
+                        $data = $this->callAfterProcess(array_merge($data, ['sender_params' => $params]));
+                    }
                 } else {
                     $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
                 }
