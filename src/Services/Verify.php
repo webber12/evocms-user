@@ -26,6 +26,9 @@ class Verify extends Service
             $response = redirect(evo()->makeUrl($redirectId, '', 'fail'));
         } else {
             if(!empty($redirectId) && is_numeric($redirectId)) {
+                if($this->getCfg("VerifyUserAuth", false) && !empty($user)) {
+                    $auth = (new UserManager())->loginById([ 'id' => $user->id ]);
+                }
                 $response = redirect(evo()->makeUrl($redirectId, '', 'success'));
             }
         }
