@@ -32,20 +32,24 @@ class SendForm extends Service
                 $errors['customErrors'] = $customErrors;
             } else {
                 $data = $this->callPrepare($data);
-                $reportTpl = $this->getCfg("SendFormReportTpl", "CODE:default template [+name+] [+email+] [+message+]");
-                $params = [
-                    'to' => !empty($data['to']) ? $data['to'] : $this->getCfg("SendFormTo"),
-                    'subject' => !empty($data['subject']) ? $data['subject'] : $this->getCfg("SendFormSubject", "Letter form site"),
-                    'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
-                ];
-                if(empty($data['preventSend'])) {
-                    if (!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
-                        $errors['fail'][] = $this->trans('fail_form_send');
-                    } else {
-                        $data = $this->callAfterProcess(array_merge($data, ['sender_params' => $params]));
-                    }
+                if(!empty($data['errors'])) {
+                    $errors['customErrors'] = $data['errors'];
                 } else {
-                    $data = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params ]));
+                    $reportTpl = $this->getCfg("SendFormReportTpl", "CODE:default template [+name+] [+email+] [+message+]");
+                    $params = [
+                        'to' => !empty($data['to']) ? $data['to'] : $this->getCfg("SendFormTo"),
+                        'subject' => !empty($data['subject']) ? $data['subject'] : $this->getCfg("SendFormSubject", "Letter form site"),
+                        'body' => app('DLTemplate')->parseChunk($reportTpl, $data),
+                    ];
+                    if (empty($data['preventSend'])) {
+                        if (!evo()->sendmail($params, '', ($data['attachments'] ?? []))) {
+                            $errors['fail'][] = $this->trans('fail_form_send');
+                        } else {
+                            $callback = $this->callAfterProcess(array_merge($data, ['sender_params' => $params]));
+                        }
+                    } else {
+                        $callback = $this->callAfterProcess(array_merge($data, ['sender_params' => $params]));
+                    }
                 }
             }
         } else {
@@ -54,7 +58,7 @@ class SendForm extends Service
         if (!empty($errors)) {
             $response = [ 'status' => 'error', 'errors' => $errors ];
         } else {
-            $response = [ 'status' => 'ok', 'message' => $this->trans('message_form_sent') ];
+            $response = [ 'status' => 'ok', 'message' => $this->trans('message_form_sent'), 'data' => $callback ];
         }
         return $this->makeResponse($response);
     }
