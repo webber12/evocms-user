@@ -17,6 +17,7 @@ class SendForm extends Service
     {
 
         $errors = [];
+        $callback = [];
 
         if (request()->has(['formid'])) {
 
