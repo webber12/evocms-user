@@ -1,8 +1,6 @@
 <?php
 namespace EvolutionCMS\EvoUser;
 
-use EvolutionCMS\UserManager\Services\UserManager;
-
 class Controller
 {
     protected $config = [];
@@ -24,12 +22,12 @@ class Controller
 
     public function ProfileEdit($user)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+        return $this->loadService(__FUNCTION__)->process(['user' => $user]);
     }
 
     public function ProfileInfo($user)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+        return $this->loadService(__FUNCTION__)->process(['user' => $user]);
     }
 
     public function DocumentList()
@@ -39,17 +37,17 @@ class Controller
 
     public function DocumentListUser($user)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+        return $this->loadService(__FUNCTION__)->process(['user' => $user]);
     }
 
     public function DocumentInfo($user, $id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'user' => $user, 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['user' => $user, 'id' => $id]);
     }
 
     public function DocumentObject($id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['id' => $id]);
     }
 
     public function DocumentCreate()
@@ -59,7 +57,7 @@ class Controller
 
     public function DocumentEdit($id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['id' => $id]);
     }
 
     public function SendForm()
@@ -74,22 +72,22 @@ class Controller
 
     public function OrderListUser($user)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'user' => $user ]);
+        return $this->loadService(__FUNCTION__)->process(['user' => $user]);
     }
 
     public function OrderInfo($id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['id' => $id]);
     }
 
     public function OrderCancel($id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['id' => $id]);
     }
 
     public function OrderRepeat($id)
     {
-        return $this->loadService(__FUNCTION__)->process([ 'id' => $id ]);
+        return $this->loadService(__FUNCTION__)->process(['id' => $id]);
     }
 
     public function EasyNewsLetter()
@@ -101,12 +99,12 @@ class Controller
     {
         return $this->loadService(__FUNCTION__)->process();
     }
-    
+
     public function Verify($user, $key)
     {
         return $this->loadService(__FUNCTION__)->process(['user' => $user, 'key' => $key]);
     }
-    
+
     public function VerifyUser()
     {
         return $this->loadService(__FUNCTION__)->process();
@@ -142,5 +140,4 @@ class Controller
         $service = !empty($serviceName) ? $serviceName : "\\EvolutionCMS\\EvoUser\\Services\\" . $name;
         return new $service($this->config);
     }
-
 }

@@ -1,9 +1,9 @@
 <?php
 namespace EvolutionCMS\EvoUser\Services;
 
+use EvolutionCMS\EvoUser\Helpers\URL;
 use EvolutionCMS\EvoUser\Services\Service;
 use \EvolutionCMS\UserManager\Services\UserManager;
-use Illuminate\Support\Facades\Validator;
 
 class ProfileEdit extends Service
 {
@@ -22,15 +22,15 @@ class ProfileEdit extends Service
 
             if (!empty($customErrors)) {
                 $errors['customErrors'] = $customErrors;
-            }/* else if (empty($data['id'])) {
+            } /* else if (empty($data['id'])) {
                 $errors['accessError'] = 'access denied';
             } */else {
                 $data = $this->callPrepare($data);
                 try {
                     $user = (new UserManager())->edit($data, true, false);
-                    if(!empty($user)) {
+                    if (!empty($user)) {
                         $user = json_decode($user, 1);
-                        if(!empty($user['id'])) {
+                        if (!empty($user['id'])) {
                             //сохраняем TV пользователя
                             $userTVs = (new UserManager())->saveValues($data, true, false);
                         }
@@ -57,13 +57,12 @@ class ProfileEdit extends Service
             $errors['common'][] = $this->trans('common_required_fields');
         }
         if (!empty($errors)) {
-            $response = [ 'status' => 'error', 'errors' => $errors ];
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = [ 'status' => 'ok', 'message' => $this->trans('message_profile_edited') ];
+            $response = ['status' => 'ok', 'message' => $this->trans('message_profile_edited')];
+
             $redirectId = $this->getCfg('ProfileEditRedirectId');
-            if(!empty($redirectId) && is_numeric($redirectId)) {
-                $response['redirect'] = evo()->makeUrl($redirectId);
-            }
+            $response['redirect'] = URL::makeUrl($redirectId);
         }
         return $this->makeResponse($response);
     }
@@ -71,9 +70,9 @@ class ProfileEdit extends Service
     protected function makeData()
     {
         $data = [];
-        if(request()->has(['fullname'])) {
+        if (request()->has(['fullname'])) {
             $fullname = $this->clean(request()->input("fullname"), 'fullname');
-            $data = [ 'fullname' => $fullname ];
+            $data = ['fullname' => $fullname];
         }
         $data = $this->injectAddFields($data);
         return $data;
