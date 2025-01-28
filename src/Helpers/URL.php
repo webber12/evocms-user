@@ -1,5 +1,7 @@
 <?php
 namespace EvolutionCMS\EvoUser\Helpers;
+use EvolutionCMS\Facades\UrlProcessor;
+use Illuminate\Support\Facades\Route;
 
 class URL
 {
@@ -14,7 +16,7 @@ class URL
             return UrlProcessor::makeUrl((int) $page, $alias, $args, $scheme);
         }
 
-        if (!\Route::has($page)) {
+        if (!Route::has($page)) {
             // нет в роутах, значит просто адрес
             return $page;
         }
