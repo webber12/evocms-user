@@ -1,13 +1,12 @@
 <?php
 namespace EvolutionCMS\EvoUser\Services;
 
+use EvolutionCMS\EvoUser\Helpers\URL;
 use EvolutionCMS\EvoUser\Services\Service;
 use \EvolutionCMS\UserManager\Services\UserManager;
 
-
 class Auth extends Service
 {
-
     public function process($params = [])
     {
         $errors = [];
@@ -35,17 +34,15 @@ class Auth extends Service
             $errors['common'][] = 'no required fields';
         }
         if (!empty($errors)) {
-            $response = [ 'status' => 'error', 'errors' => $errors ];
+            $response = ['status' => 'error', 'errors' => $errors];
         } else {
-            $response = [ 'status' => 'ok', 'message' => $this->trans('message_success_auth') ];
+            $response = ['status' => 'ok', 'message' => $this->trans('message_success_auth')];
+
             $redirectId = $this->getCfg('AuthRedirectId');
-            if(!empty($redirectId) && is_numeric($redirectId)) {
-                $response['redirect'] = evo()->makeUrl($redirectId);
-            }
+            $response['redirect'] = URL::makeUrl($redirectId);
         }
         return $this->makeResponse($response);
     }
-
 
     protected function makeData()
     {
@@ -54,5 +51,4 @@ class Auth extends Service
         $data = ['username' => $username, 'password' => $password];
         return $data;
     }
-
 }

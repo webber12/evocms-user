@@ -5,7 +5,7 @@ class Response
 {
     public function __construct()
     {
-
+        //
     }
 
     protected static function isAjax()
