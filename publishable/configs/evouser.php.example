@@ -5,7 +5,7 @@
 return [
     // default (jQuery)
     // "FrontJS" => 'assets/plugins/evocms-user/script.js',
-    // custom
+    // custom (исходник: https://github.com/helgispbru/evocms-user-jsvanilla)
     // "FrontJS" => 'assets/plugins/evocms-user/script-vanilla.js',
 
     /* показ списка заказов разруливается только ролями
