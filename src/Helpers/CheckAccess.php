@@ -2,7 +2,6 @@
 namespace EvolutionCMS\EvoUser\Helpers;
 
 use EvolutionCMS\Models\SiteContent;
-use EvolutionCMS\Models\UserAttribute;
 use EvolutionCMS\UserManager\Services\UserManager;
 
 class CheckAccess
@@ -23,7 +22,10 @@ class CheckAccess
         $rules = $this->getRules();
         // если проверка отменена в правилах, просто возвращаем true
         // и при необходимости разруливаем на уровне кастомной валидации
-        if(isset($rules['withoutRules']) && $rules['withoutRules'] === true) return true;
+        if (isset($rules['withoutRules']) && $rules['withoutRules'] === true) {
+            return true;
+        }
+
         $qParams = $this->getParamsFromQuery();
         if (!empty($rules)) {
             $user = $this->isLogged($rules);
@@ -50,12 +52,12 @@ class CheckAccess
     {
         $user = [];
         $context = !empty($rules['context']) ? $rules['context'] : 'web';
-        if($context == 'all') {
+        if ($context == 'all') {
             $uid = evo()->getLoginUserID('web') ?: evo()->getLoginUserID('mgr');
         } else {
             $uid = evo()->getLoginUserID($context);
         }
-        if($uid) {
+        if ($uid) {
             $user = $this->loadUser($uid);
         }
         return $user;
@@ -64,7 +66,7 @@ class CheckAccess
     protected function loadUser($uid, $reload = true)
     {
         $user = $this->getUser($uid);
-        if(empty($user) || ($user['id'] != $uid && $reload)) {
+        if (empty($user) || ($user['id'] != $uid && $reload)) {
             $user = $this->reloadUser($uid);
         }
         $this->setUser($user);
@@ -89,6 +91,7 @@ class CheckAccess
         $tvs = $service->getValues(['id' => $uid], false, false);
         $arr = $user->attributes->toArray();
         $arr['username'] = $user->username;
+        $arr['id'] = $user->id;
         $arr['role'] = evo()->db->getValue("SELECT role FROM " . evo()->getFullTablename("user_attributes") . " where internalKey=" . $arr['internalKey']);
         $arr['tvs'] = $tvs;
         return $arr;
@@ -97,15 +100,15 @@ class CheckAccess
     protected function checkCurrent($uid, $query_user, $rules)
     {
         $flag = true;
-        if(!empty($rules['current'])) {
+        if (!empty($rules['current'])) {
             //если правило задано и текущий юзер не равен запрашиваемому
             if ($query_user != $uid) {
                 $flag = false;
             }
-        } else if(array_key_exists('current', $rules) && $rules['current'] == false) {
+        } elseif (array_key_exists('current', $rules) && $rules['current'] == false) {
             //правило прямо задано в false
             $flag = false;
-        } else if (!array_key_exists('current', $rules)) {
+        } elseif (!array_key_exists('current', $rules)) {
             //правило вообще не задано
             $flag = false;
         }
@@ -115,7 +118,7 @@ class CheckAccess
     protected function checkRoles($role, $roles)
     {
         $flag = true;
-        if(empty($role)) {
+        if (empty($role)) {
             $flag = false;
         } else {
             if (!empty($roles) && !empty($role)) {
@@ -137,26 +140,26 @@ class CheckAccess
                 $arr['id'] = $id;
                 $res = SiteContent::select(['createdby'])
                     ->where('id', $id);
-                if(config( "evocms-user." . $this->serviceName . "OnlyActive", false)) {
+                if (config("evocms-user." . $this->serviceName . "OnlyActive", false)) {
                     $res = $res->active();
                 }
-                if(config( "evocms-user." . $this->serviceName . "ShowUndeleted", true)) {
+                if (config("evocms-user." . $this->serviceName . "ShowUndeleted", true)) {
                     $res = $res->where('deleted', 0);
                 }
                 $res = $res->limit(1)->get()->toArray();
                 $uid = -1;
-                if(count($res) == 1) {
+                if (count($res) == 1) {
                     $uid = $res[0]['createdby'];
                 }
                 $arr['user'] = $uid;
                 break;
             //просматривают все документы только роли
             case 'DocumentList':
-                //документы могут создавать только по роли
+            //документы могут создавать только по роли
             case 'DocumentCreate':
-                //отправка форм также разруливается ролями
+            //отправка форм также разруливается ролями
             case 'SendFormAuth':
-                //список всех заказов разруливается ролями
+            //список всех заказов разруливается ролями
             case 'OrderList':
                 $arr['user'] = -1;
                 break;

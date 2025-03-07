@@ -170,6 +170,7 @@ class Service
         $tvs = $service->getValues(['id' => $uid], false, false);
         $arr = $user->attributes->toArray();
         $arr['username'] = $user->username;
+        $arr['id'] = $user->id;
         $arr['role'] = evo()->db->getValue("SELECT role FROM " . evo()->getFullTablename("user_attributes") . " where internalKey=" . $arr['internalKey']);
         $arr['tvs'] = $tvs;
         return $arr;
@@ -204,7 +205,6 @@ class Service
                     $customConfig[$k] = $v;
                 }
             }
-
         }
         $this->config = array_merge($this->config, $customConfig);
         return;
