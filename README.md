@@ -1,5 +1,9 @@
 #### Установка:
-добавить в секцию require файла core/custom/composer.json строку
+выполнить в папке core команду
+
+```php artisan package:installrequire webber12/evocms-user "*"```
+
+либо (альтернативный вариант) - добавить в секцию require файла core/custom/composer.json строку
 
 ```"webber12/evocms-user": "*"```
 
@@ -7,7 +11,7 @@
  
 ```composer update webber12/evocms-user```
 
-затем в этой же папке выполнить (если пакет ранее не устанавливался)
+затем, независимо от способа установки, в этой же папке выполнить (если пакет ранее не устанавливался)
 
 ```php artisan vendor:publish --provider="EvolutionCMS\EvoUser\EvoUserServiceProvider"```
 

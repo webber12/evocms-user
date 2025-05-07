@@ -1,11 +1,11 @@
 <?php
-//создать файл evouser.php в текущей папке
-//который возвращаем массив кастомных параметров пакета
+// создать файл evouser.php в текущей папке
+// который возвращает массив параметров пакета
 
 return [
-    // default
+    // default (jQuery)
     // "FrontJS" => 'assets/plugins/evocms-user/script.js',
-    // custom
+    // custom (исходник: https://github.com/helgispbru/evocms-user-jsvanilla)
     // "FrontJS" => 'assets/plugins/evocms-user/script-vanilla.js',
 
     /* показ списка заказов разруливается только ролями
@@ -21,12 +21,124 @@ return [
     "ProfileEditCustomFields" => [ 'fullname' ], //для редактирования профиля поле fullname обязательно
     */
 
-    "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\AuthCustom",
+    // -- все параметры:
 
+    /*
+    // Auth
+    'AuthRedirectId' => '', // может быть id ресурса, имя роута или ссылка
+    */
+
+    /*
+    // DocumentCreate
+    'DocumentCreateDefaults' => [],
+    */
+
+    /*
+    // DocumentList
+    'DocumentListDisplay' => 15,
+    'DocumentListSortBy' => 'menuindex',
+    'DocumentListSortDir' => 'DESC',
+    'DocumentListOnlyActive' => false,
+    'DocumentListShowUndeleted' => true,
+    'DocumentListFields' => 'id,pagetitle',
+    'DocumentListTvs' => ''
+    'DocumentListFilters' => [],
+    */
+
+    /*
+    // DocumentListUser
+    'DocumentListUserDisplay' => 15,
+    'DocumentListUserSortBy' => 'menuindex',
+    'DocumentListUserSortDir' => 'DESC',
+    'DocumentListUserOnlyActive' => false,
+    'DocumentListUserShowUndeleted' => true,
+    'DocumentListUserFields' => 'id,pagetitle',
+    'DocumentListUserTvs' => ''
+    'DocumentListUSerFilters' => [],
+    */
+
+    /*
+    // OrderCancel
+    'OrderCancelStatus' => 5,
+    'OrderCancelAvailableStatuses' => [],
+    */
+
+    /*
+    // OrderList
+    'OrderListDisplay' => 15,
+    'OrderListPrepare' => false,
+    */
+
+    /*
+    // OrderRepeat
+    'OrderRepeatCartName' => 'products',
+    */
+
+    /*
+    // ProfileEdit
+    'ProfileEditRedirectId' => '', // может быть id ресурса, имя роута или ссылка
+    */
+
+    /*
+    // Register
+    'RegisterVerifyUser' => false,
+    'RegisterVerifyText' => '@CODE:Для завершения процесса регистрация перейдите по указанной ссылке [+url+]',
+    'RegisterUserAuth' => false,
+    'RegisterSendPasswordBody' => '@CODE:Ваш пароль доступа к сайту ' . evo()->getConfig('site_name') . ': [+password+]',
+    'RegisterSendPasswordSubject' => 'Пароль доступа к сайту " . evo()->getConfig('site_name'),
+    'RegisterNotify' => true,
+    'RegisterNotifySubject' => '@CODE:' . evo()->getConfig('emailsubject'),
+    'RegisterNotifyBody' => '@CODE:' . evo()->getConfig('websignupemail_message'),
+    'RegisterRedirectId' => '', // может быть id ресурса, имя роута или ссылка
+    */
+
+    /*
+    // ResetPassword
+    'ResetPasswordPageId' => evo()->getConfig('site_start'), // может быть id ресурса, имя роута или ссылка
+    'ResetPasswordSubject' => $this->trans('message_profile_remind_email_subj'),
+    'ResetPasswordText' => $this->trans('message_profile_remind_email_text'),
+    */
+
+    /*
+    // SendFormTpl
+    'SendFormReportTpl' => 'CODE:default template [+name+] [+email+] [+message+]',
+    'SendFormTo' => '',
+    'SendFormSubject' => 'Letter form site',
+    */
+
+    /*
+    // Verify
+    'RegisterVerifyUserPageId' => evo()->getConfig('site_start), // может быть id ресурса, имя роута или ссылка
+    'VerifyUserAuth' => false,
+    */
+
+    /*
+    // Service
+    'LogoutRedirectId' => 0, // может быть id ресурса, имя роута или ссылка
+    */
+
+    /*
+    // общие названия параметров сервиса, где <> это название сервиса
+    '<>CleanData' => true,
+    '<>CleanDataFunction' => false,
+    '<>CustomFields' => [],
+    '<>CustomRules' => [],
+    '<>CustomMessages' => [],
+    '<>CustomValidator' =>false,
+    '<>Prepare' => '',
+    '<>AfterProcess' => '',
+    */
+
+    /*
+    // например:
+    "AuthService" =>  "\\EvolutionCMS\\EvoUser\\Services\\AuthCustom",
+    // тут <> это Profile
     "ProfileCustomMessages" => [
         'fullname.required' => Lang::get("global.required_field", ['field' => 'fullname']),
         'first_name.required' => Lang::get("global.required_field", ['field' => 'first_name']),
         'fullname.min' => 'полное имя не короче 5 знаков',
         'first_name.min' => 'имя не короче 5 знаков',
     ],
+    "ProfileEditCustomFields" => ['fullname', 'phone', 'mobilephone'],
+    */
 ];
