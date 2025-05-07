@@ -65,7 +65,7 @@ class Register extends Service
                             $fields = [
                                 'uid' => $data['username'],
                                 'sname' => evo()->getConfig('site_name'),
-                                'pwd' => 'Не высылается в целях безопасности',
+                                'pwd' => $this->getCfg("RegisterHidePassword", true) ? 'Не высылается в целях безопасности' : $data['password'],
                                 'surl' => evo()->getConfig('site_url'),
                             ];
                             $params = [
@@ -75,6 +75,7 @@ class Register extends Service
                             ];
                             evo()->sendmail($params, '', []);
                         }
+                        $callback = $this->callAfterProcess(array_merge($data, [ 'sender_params' => $params, 'id' => $user->id ]));
                     } else {
                         $errors['fail'][] = $this->trans('fail_profile_create');
                     }
