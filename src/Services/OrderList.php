@@ -26,6 +26,11 @@ class OrderList extends Service
             'paginate'        => 'pages',
         ];
 
+        $DLConfig = $this->getCfg('OrderListDLConfig', false);
+        if(!empty($DLConfig)) {
+            $DLParams['config'] = $DLConfig;
+        }
+
         $DLParams['prepare'][] = @function($data, $modx, $DL, $eDL) use (&$index) {
             $data['fields']    = !empty($data['fields']) ? json_decode($data['fields'], true) : [];
             $data['index']     = $index;
@@ -53,6 +58,7 @@ class OrderList extends Service
         $arr["last_page"] = evo()->getPlaceholder('list.totalPages');
         $arr["per_page"] = $this->getCfg('OrderListDisplay', 15);
         $arr["total"] = evo()->getPlaceholder('list.count');
+        $arr["pages"] = evo()->getPlaceholder('list.pages');
 
         $arr['data'] = json_decode($list, true);
 
