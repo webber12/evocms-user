@@ -26,9 +26,11 @@ class Register extends Service
                 }
                 try {
                     $user = (new UserManager())->create($data, true, false);
-                    if (!empty($user->id) && !empty($data['role_id'])) {
-                        //$data['role_id'] готовим в RegisterPrepare
-                        $user = (new UserManager())->setRole(['id' => $user->id, 'role' => $data['role_id']]);
+                    if (!empty($user->id) && (!empty($data['role_id']) || !empty($this->getCfg('RegisterWithoutRole'))) {
+                        if(!empty($data['role_id'])) {
+                            //$data['role_id'] готовим в RegisterPrepare
+                            $user = (new UserManager())->setRole(['id' => $user->id, 'role' => $data['role_id']]);
+                        }
                         //$data['user_groups'] готовим в RegisterPrepare
                         if (!empty($data['user_groups'])) {
                             $user = (new UserManager())->setGroups(['id' => $user->id, 'groups' => $data['user_groups']]);
@@ -95,7 +97,9 @@ class Register extends Service
             $response = ['status' => 'ok', 'message' => $this->trans('message_profile_created')];
 
             $redirectId = $this->getCfg('RegisterRedirectId');
-            $response['redirect'] = URL::makeUrl($redirectId);
+            if(!empty($redirectId)) {
+                $response['redirect'] = URL::makeUrl($redirectId);
+            }
         }
         return $this->makeResponse($response);
     }

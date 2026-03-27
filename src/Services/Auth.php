@@ -39,7 +39,9 @@ class Auth extends Service
             $response = ['status' => 'ok', 'message' => $this->trans('message_success_auth')];
 
             $redirectId = $this->getCfg('AuthRedirectId');
-            $response['redirect'] = URL::makeUrl($redirectId);
+            if(!empty($redirectId)) {
+                $response['redirect'] = URL::makeUrl($redirectId);
+            }
         }
         return $this->makeResponse($response);
     }
