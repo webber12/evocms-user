@@ -26,7 +26,7 @@ class Register extends Service
                 }
                 try {
                     $user = (new UserManager())->create($data, true, false);
-                    if (!empty($user->id) && (!empty($data['role_id']) || !empty($this->getCfg('RegisterWithoutRole'))) {
+                    if (!empty($user->id)) {
                         if(!empty($data['role_id'])) {
                             //$data['role_id'] готовим в RegisterPrepare
                             $user = (new UserManager())->setRole(['id' => $user->id, 'role' => $data['role_id']]);
