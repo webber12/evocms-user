@@ -24,14 +24,8 @@ class OrderInfo extends Service
         }
         $order['items_price'] = $items_price;
 
-        $subtotals = [];
-        $total = $order['items_price'];
-        evo()->invokeEvent('OnCollectSubtotals', [
-            'rows'     => &$subtotals,
-            'total'    => &$total,
-            'realonly' => true,
-        ]);
-        $order['subtotals'] = $subtotals;
+        $query   = evo()->db->select('*', evo()->getFullTablename('commerce_order_products'), "`order_id` = '" . $order_id . "' AND product_id IS NULL ", 'position ASC');
+        $order['subtotals'] = evo()->db->makeArray($query);
 
         return $this->makeResponse([ 'order' => $order, 'items' => $items, 'history' => $history ]);
     }
