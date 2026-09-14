@@ -80,6 +80,7 @@ class Service
     protected function clean($value, $key = false)
     {
         $classname = $this->getClassName();
+        $preventFields = $this->getCfg($classname . 'PreventStripTags', []);
         if ($this->getCfg($classname . 'CleanData', true)) {
             $clean_func = $this->getCfg($classname . 'CleanDataFunction', false);
             if (empty($clean_func) || !is_callable($clean_func)) {
@@ -89,6 +90,10 @@ class Service
                 $value = array_map('trim', $value);
                 $output = array_map($clean_func, [0 => $value], [0 => $key]);
             } else {
+                if(!in_array($key, $preventFields)) {
+                    $value = evo()->striptags($value);
+                    $value = str_replace('sanitized_by_modx', '', $value);
+                }
                 $output = call_user_func($clean_func, trim($value), $key);
             }
         } else {

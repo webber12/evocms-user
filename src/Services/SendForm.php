@@ -66,12 +66,12 @@ class SendForm extends Service
 
     protected function makeData()
     {
-        $data = [];
-        foreach($_POST as $k => $v) {
-            $k = e($k);
-            $v = is_string($v) ? $this->clean($v, $k) : $this->clean(implode('||', $v), $k);
-            $data[$k] = $v;
-        }
+        $data = $_POST ?? [];
+        array_walk_recursive($data, function(&$value, $key) {
+            if(is_string($value)) {
+                $value = $this->clean($value, $key);
+            }
+        });
         return $data;
     }
 
